@@ -1,0 +1,2293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HK Mortgage Master | Hong Kong Mortgage Calculator 香港按揭計算機 (hkmortgagemaster.app)</title>
+  <meta name="description" content="Comprehensive interactive Hong Kong mortgage calculator (香港按揭計算機). Calculate H-Plan vs P-Plan rates, HKMA 70% LTV, HKMC 90% Mortgage Insurance (MIP), Scale 2 Stamp Duty, DSR 50% & Stress Test, and Mortgage-Link high-interest savings.">
+  <meta name="keywords" content="Hong Kong Mortgage Calculator, 香港按揭計算機, H按, P按, HIBOR mortgage, HKMA 70% LTV, HKMC MIP, 按揭保險, 印花稅計算機, Stamp Duty Calculator HK, 壓力測試, DSR, Mortgage-Link">
+  <meta name="author" content="HK Mortgage Master (hkmortgagemaster.app)">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://hkmortgagemaster.app/">
+  <!-- Open Graph / Social Sharing -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://hkmortgagemaster.app/">
+  <meta property="og:title" content="HK Mortgage Master | Hong Kong Mortgage & Stamp Duty Calculator 香港按揭計算機">
+  <meta property="og:description" content="Calculate Hong Kong monthly mortgage repayments, H-Plan Prime caps, HKMC 90% MIP insurance, Scale 2 Stamp Duty, DSR affordability, and Mortgage-Link offsets.">
+  <meta property="og:site_name" content="HK Mortgage Master">
+  <meta property="og:locale" content="en_HK">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://hkmortgagemaster.app/">
+  <meta name="twitter:title" content="HK Mortgage Master | Hong Kong Mortgage Calculator 香港按揭計算機">
+  <meta name="twitter:description" content="Interactive Hong Kong mortgage, stamp duty, MIP, DSR stress test, and Mortgage-Link calculator.">
+  <meta name="theme-color" content="#0f172a">
+  <!-- Inline SVG Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23064e3b'/%3E%3Cpath d='M16 48V24l16-10 16 10v24h-10V36h-12v12H16z' fill='%2310b981'/%3E%3C/svg%3E">
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "HK Mortgage Master | 香港按揭計算機",
+    "url": "https://hkmortgagemaster.app/",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "All",
+    "description": "Comprehensive Hong Kong mortgage payments, stamp duty, HKMC MIP, DSR affordability, and Mortgage-Link calculator.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "HKD"
+    }
+  }
+  </script>
+  <!-- Tailwind CSS 3.4.17 -->
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <!-- Chart.js 4.4.1 -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#ecfdf5',
+              100: '#d1fae5',
+              200: '#a7f3d0',
+              500: '#10b981',
+              600: '#059669',
+              700: '#047857',
+              800: '#065f46',
+              900: '#064e3b',
+            },
+            hkblue: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              800: '#1e40af',
+              900: '#1e3a8a',
+            }
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    input[type=range] {
+      accent-color: #059669;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    @media print {
+      body { background: white; color: black; }
+      .no-print { display: none !important; }
+      .print-shadow-none { box-shadow: none !important; }
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+
+  <!-- Top Announcement Bar / Policy Badge -->
+  <header class="bg-gradient-to-r from-slate-900 via-hkblue-900 to-slate-900 text-white shadow-md no-print">
+    <div class="max-w-7xl mx-auto px-4 py-3 sm:px-6 lg:px-8">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div class="flex items-center space-x-3">
+          <span class="inline-flex items-center justify-center p-2 bg-emerald-500/20 text-emerald-400 rounded-lg">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+            </svg>
+          </span>
+          <div>
+            <h1 class="text-lg sm:text-xl font-bold tracking-tight flex items-center gap-2">
+              HK Mortgage Master <span class="text-xs bg-emerald-600 px-2 py-0.5 rounded text-white font-normal uppercase tracking-wider">HKMA 70% LTV Standard</span>
+            </h1>
+            <p class="text-xs text-slate-300">Hong Kong Comprehensive Mortgage & Repayment Engine • 香港按揭計算器</p>
+          </div>
+        </div>
+
+        <!-- Quick Regulatory Badges -->
+        <div class="flex items-center flex-wrap gap-2 text-xs">
+          <span class="bg-slate-800/80 border border-slate-700 px-2.5 py-1 rounded-full text-slate-200">
+            🏛️ HKMA Bank Cap: <strong>70% LTV</strong>
+          </span>
+          <span class="bg-slate-800/80 border border-slate-700 px-2.5 py-1 rounded-full text-slate-200">
+            🛡️ HKMC MIP: <strong>Up to 90% LTV</strong>
+          </span>
+          <span class="bg-slate-800/80 border border-slate-700 px-2.5 py-1 rounded-full text-slate-200">
+            📑 DSR: <strong>50% Standard</strong>
+          </span>
+          <button id="printReportBtn" class="bg-emerald-600 hover:bg-emerald-500 text-white font-medium px-3 py-1 rounded-md transition text-xs flex items-center gap-1 shadow-sm">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+            Print / Save PDF
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navigation Tabs -->
+  <nav class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm no-print">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex space-x-1 sm:space-x-4 overflow-x-auto py-2 custom-scrollbar" id="tabNav">
+        <button data-tab="tab-calculator" class="tab-btn px-4 py-2 text-sm font-semibold rounded-lg bg-emerald-50 text-emerald-700 whitespace-nowrap flex items-center gap-1.5 transition">
+          <span>📊</span> Mortgage Calculator
+        </button>
+        <button data-tab="tab-affordability" class="tab-btn px-4 py-2 text-sm font-medium rounded-lg text-slate-600 hover:bg-slate-100 whitespace-nowrap flex items-center gap-1.5 transition">
+          <span>🛡️</span> Affordability & Stress Test
+        </button>
+        <button data-tab="tab-amortization" class="tab-btn px-4 py-2 text-sm font-medium rounded-lg text-slate-600 hover:bg-slate-100 whitespace-nowrap flex items-center gap-1.5 transition">
+          <span>📈</span> Amortization & Early Repayment
+        </button>
+        <button data-tab="tab-mortgagelink" class="tab-btn px-4 py-2 text-sm font-medium rounded-lg text-slate-600 hover:bg-slate-100 whitespace-nowrap flex items-center gap-1.5 transition">
+          <span>💰</span> Mortgage-Link Saver
+        </button>
+        <button data-tab="tab-comparison" class="tab-btn px-4 py-2 text-sm font-medium rounded-lg text-slate-600 hover:bg-slate-100 whitespace-nowrap flex items-center gap-1.5 transition">
+          <span>⚖️</span> Plan Comparison (H vs P vs Fixed)
+        </button>
+        <button data-tab="tab-guide" class="tab-btn px-4 py-2 text-sm font-medium rounded-lg text-slate-600 hover:bg-slate-100 whitespace-nowrap flex items-center gap-1.5 transition">
+          <span>📘</span> HK Regulatory Guide
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content Container -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-1 w-full">
+
+    <!-- ==================== TAB 1: MORTGAGE CALCULATOR ==================== -->
+    <div id="tab-calculator" class="tab-pane block space-y-6">
+      
+      <!-- Top Grid: Inputs (Left) and Results / Charts (Right) -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+        <!-- Left Column: Input Form (5 cols on lg) -->
+        <div class="lg:col-span-5 space-y-5">
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-5">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+              <h2 class="text-base font-bold text-slate-900 flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> Property & Loan Parameters
+              </h2>
+              <button id="resetDefaultsBtn" class="text-xs text-slate-500 hover:text-emerald-600 underline">Reset Defaults</button>
+            </div>
+
+            <!-- Property Value Input & Presets -->
+            <div>
+              <div class="flex justify-between items-center mb-1.5">
+                <label for="propPrice" class="text-xs font-semibold text-slate-700">Property Price (物業售價)</label>
+                <span id="propPriceDisplay" class="text-sm font-bold text-emerald-700 font-mono">HK$ 8,000,000</span>
+              </div>
+              <div class="relative">
+                <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 font-medium text-sm">HK$</span>
+                <input type="number" id="propPrice" value="8000000" min="500000" max="100000000" step="100000" 
+                  class="w-full pl-11 pr-3 py-2 border border-slate-300 rounded-lg text-sm font-mono focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none">
+              </div>
+              <!-- Presets -->
+              <div class="flex flex-wrap gap-1.5 mt-2">
+                <button type="button" class="preset-price-btn px-2 py-0.5 text-xs bg-slate-100 hover:bg-emerald-100 hover:text-emerald-800 rounded transition font-medium" data-value="4000000">$4M</button>
+                <button type="button" class="preset-price-btn px-2 py-0.5 text-xs bg-slate-100 hover:bg-emerald-100 hover:text-emerald-800 rounded transition font-medium" data-value="6000000">$6M</button>
+                <button type="button" class="preset-price-btn px-2 py-0.5 text-xs bg-emerald-50 text-emerald-700 border border-emerald-200 rounded transition font-semibold" data-value="8000000">$8M</button>
+                <button type="button" class="preset-price-btn px-2 py-0.5 text-xs bg-slate-100 hover:bg-emerald-100 hover:text-emerald-800 rounded transition font-medium" data-value="10000000">$10M</button>
+                <button type="button" class="preset-price-btn px-2 py-0.5 text-xs bg-slate-100 hover:bg-emerald-100 hover:text-emerald-800 rounded transition font-medium" data-value="12000000">$12M</button>
+                <button type="button" class="preset-price-btn px-2 py-0.5 text-xs bg-slate-100 hover:bg-emerald-100 hover:text-emerald-800 rounded transition font-medium" data-value="15000000">$15M</button>
+                <button type="button" class="preset-price-btn px-2 py-0.5 text-xs bg-slate-100 hover:bg-emerald-100 hover:text-emerald-800 rounded transition font-medium" data-value="20000000">$20M</button>
+              </div>
+            </div>
+
+            <!-- Property Type & Buyer Status -->
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label for="propertyType" class="text-xs font-semibold text-slate-700 block mb-1">Property Type (種類)</label>
+                <select id="propertyType" class="w-full text-xs py-2 px-2.5 border border-slate-300 rounded-lg bg-white focus:ring-2 focus:ring-emerald-500 outline-none">
+                  <option value="private" selected>Private Residential (私人住宅)</option>
+                  <option value="subsidized">HOS Subsidized (居屋/白居二)</option>
+                  <option value="presale">Presale / Off-plan (樓花)</option>
+                  <option value="village">Village House (村屋)</option>
+                  <option value="non_residential">Non-Residential (工商舖)</option>
+                </select>
+              </div>
+              <div>
+                <label for="buyerStatus" class="text-xs font-semibold text-slate-700 block mb-1">Buyer Status (買家身份)</label>
+                <select id="buyerStatus" class="w-full text-xs py-2 px-2.5 border border-slate-300 rounded-lg bg-white focus:ring-2 focus:ring-emerald-500 outline-none">
+                  <option value="first_time" selected>HKPR First-Time (首置客)</option>
+                  <option value="non_first_time">Non-First-Time / 2nd (非首置)</option>
+                  <option value="non_hkpr">Non-HKPR (非永久居民)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Usage & Property Age / Borrower Age -->
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label for="propertyUsage" class="text-xs font-semibold text-slate-700 block mb-1">Usage (用途)</label>
+                <select id="propertyUsage" class="w-full text-xs py-2 px-2.5 border border-slate-300 rounded-lg bg-white focus:ring-2 focus:ring-emerald-500 outline-none">
+                  <option value="self_use" selected>Self-Occupied (自住)</option>
+                  <option value="investment">Rental / Letting (出租/投資)</option>
+                </select>
+              </div>
+              <div>
+                <label for="borrowerAge" class="text-xs font-semibold text-slate-700 block mb-1">Borrower Age (年齡)</label>
+                <div class="flex items-center gap-1">
+                  <input type="number" id="borrowerAge" value="32" min="18" max="75" class="w-full text-xs py-2 px-2.5 border border-slate-300 rounded-lg bg-white font-mono outline-none">
+                  <span class="text-xs text-slate-400 font-medium">Yrs</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- LTV & Down Payment -->
+            <div>
+              <div class="flex justify-between items-center mb-1">
+                <label for="ltvSlider" class="text-xs font-semibold text-slate-700">Loan-to-Value (LTV 按揭成數)</label>
+                <span id="ltvDisplay" class="text-sm font-bold text-emerald-700 font-mono">70%</span>
+              </div>
+              <input type="range" id="ltvSlider" min="10" max="90" step="5" value="70" class="w-full cursor-pointer h-2 bg-slate-200 rounded-lg">
+              
+              <div class="flex justify-between text-[11px] text-slate-400 mt-1">
+                <span>10%</span>
+                <span class="text-blue-600 font-medium">Bank Cap: 70%</span>
+                <span class="text-purple-600 font-medium">MIP Max: 90%</span>
+              </div>
+
+              <!-- LTV Quick Presets -->
+              <div class="flex gap-2 mt-2">
+                <button type="button" class="ltv-preset-btn flex-1 py-1 text-xs border border-slate-200 rounded hover:bg-slate-100 font-medium" data-ltv="50">50%</button>
+                <button type="button" class="ltv-preset-btn flex-1 py-1 text-xs border border-slate-200 rounded hover:bg-slate-100 font-medium" data-ltv="60">60%</button>
+                <button type="button" class="ltv-preset-btn flex-1 py-1 text-xs border border-emerald-500 bg-emerald-50 text-emerald-800 rounded font-semibold" data-ltv="70">70% (Bank Max)</button>
+                <button type="button" class="ltv-preset-btn flex-1 py-1 text-xs border border-purple-200 text-purple-700 bg-purple-50 rounded hover:bg-purple-100 font-medium" data-ltv="80">80% (MIP)</button>
+                <button type="button" class="ltv-preset-btn flex-1 py-1 text-xs border border-purple-300 text-purple-800 bg-purple-50 rounded hover:bg-purple-100 font-semibold" data-ltv="90">90% (MIP)</button>
+              </div>
+
+              <!-- MIP Alert / Warning box if > 70% -->
+              <div id="mipAlertBox" class="mt-3 p-3 bg-purple-50 border border-purple-200 rounded-xl text-xs text-purple-900 hidden">
+                <div class="flex items-start gap-2">
+                  <span class="text-purple-600 mt-0.5">ℹ️</span>
+                  <div class="flex-1">
+                    <p class="font-semibold">HKMC Mortgage Insurance Programme (MIP) Active</p>
+                    <p class="text-slate-600 text-[11px] mt-0.5">LTV exceeds the 70% bank cap. Self-use residential properties can borrow up to 90% (for ≤HK$10M) with HKMC insurance.</p>
+                    <div class="mt-2 flex items-center justify-between pt-1 border-t border-purple-200/60">
+                      <label class="flex items-center gap-1.5 cursor-pointer text-[11px] font-medium text-purple-800">
+                        <input type="checkbox" id="financeMIP" checked class="rounded text-purple-600 focus:ring-purple-500">
+                        Finance MIP into mortgage loan (加借保費)
+                      </label>
+                      <span id="mipPremiumBadge" class="font-mono font-bold text-purple-700">HK$ 114,400</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Loan Tenure -->
+            <div>
+              <div class="flex justify-between items-center mb-1">
+                <label for="tenureSlider" class="text-xs font-semibold text-slate-700">Loan Tenure (供款年期)</label>
+                <span id="tenureDisplay" class="text-sm font-bold text-emerald-700 font-mono">30 Years (360 mos)</span>
+              </div>
+              <input type="range" id="tenureSlider" min="5" max="30" step="1" value="30" class="w-full cursor-pointer h-2 bg-slate-200 rounded-lg">
+              <div class="flex justify-between items-center mt-1 text-[11px] text-slate-400">
+                <span>5 Years</span>
+                <span id="maxTenureAllowedHint" class="text-emerald-700 font-medium">Max allowable: 30 yrs (Age rule: 80 - 32 = 48 yrs)</span>
+                <span>30 Years</span>
+              </div>
+            </div>
+
+            <!-- Repayment Frequency -->
+            <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+              <label class="text-xs font-semibold text-slate-700 block mb-1.5">Repayment Frequency (供款頻率)</label>
+              <div class="grid grid-cols-2 gap-2">
+                <label class="flex items-center justify-center gap-2 p-1.5 rounded-lg border border-emerald-500 bg-white text-xs font-medium text-emerald-800 cursor-pointer shadow-sm has-[:checked]:border-emerald-500 has-[:checked]:bg-emerald-50">
+                  <input type="radio" name="repayFrequency" value="monthly" checked class="text-emerald-600">
+                  Monthly (每月供款)
+                </label>
+                <label class="flex items-center justify-center gap-2 p-1.5 rounded-lg border border-slate-200 bg-white text-xs font-medium text-slate-700 cursor-pointer hover:bg-slate-50">
+                  <input type="radio" name="repayFrequency" value="biweekly" class="text-emerald-600">
+                  Bi-Weekly (每兩周供款)
+                </label>
+              </div>
+              <p class="text-[10px] text-slate-500 mt-1.5">Bi-weekly makes 26 half-payments a year (= 13 monthly payments), reducing loan term by ~3.5 years.</p>
+            </div>
+
+            <!-- Bank Preset & Mortgage Scheme (H-Plan vs P-Plan vs Fixed) -->
+            <div class="space-y-3 pt-2 border-t border-slate-100">
+              <div class="flex items-center justify-between">
+                <label class="text-xs font-semibold text-slate-700">Mortgage Scheme (按揭計劃)</label>
+                <div class="flex gap-1 text-[11px]">
+                  <button type="button" class="plan-type-btn px-2.5 py-1 rounded-md font-semibold bg-emerald-600 text-white" data-plan="H">H-Plan</button>
+                  <button type="button" class="plan-type-btn px-2.5 py-1 rounded-md font-medium bg-slate-100 text-slate-700 hover:bg-slate-200" data-plan="P">P-Plan</button>
+                  <button type="button" class="plan-type-btn px-2.5 py-1 rounded-md font-medium bg-slate-100 text-slate-700 hover:bg-slate-200" data-plan="Fixed">Fixed 定息</button>
+                </div>
+              </div>
+
+              <!-- Bank Presets Selector -->
+              <div class="flex items-center gap-2">
+                <span class="text-xs text-slate-500 font-medium">Bank Presets:</span>
+                <div class="flex flex-wrap gap-1">
+                  <button type="button" class="bank-preset-btn px-2 py-0.5 text-[11px] bg-slate-100 hover:bg-slate-200 rounded font-medium" data-bank="HSBC">HSBC (滙豐)</button>
+                  <button type="button" class="bank-preset-btn px-2 py-0.5 text-[11px] bg-slate-100 hover:bg-slate-200 rounded font-medium" data-bank="BOC">BOC HK (中銀)</button>
+                  <button type="button" class="bank-preset-btn px-2 py-0.5 text-[11px] bg-slate-100 hover:bg-slate-200 rounded font-medium" data-bank="HASE">Hang Seng (恒生)</button>
+                  <button type="button" class="bank-preset-btn px-2 py-0.5 text-[11px] bg-slate-100 hover:bg-slate-200 rounded font-medium" data-bank="SCB">StanChart (渣打)</button>
+                </div>
+              </div>
+
+              <!-- H-Plan Parameters Container -->
+              <div id="hPlanInputs" class="bg-emerald-50/50 p-3 rounded-xl border border-emerald-100 space-y-2.5 text-xs">
+                <div class="grid grid-cols-2 gap-2">
+                  <div>
+                    <label for="hiborRate" class="text-slate-600 block mb-0.5">1-Mo HIBOR (%)</label>
+                    <input type="number" id="hiborRate" value="3.90" step="0.01" min="0" max="15" class="w-full p-1.5 border border-slate-300 rounded bg-white font-mono text-xs">
+                  </div>
+                  <div>
+                    <label for="hSpread" class="text-slate-600 block mb-0.5">Bank Spread (%)</label>
+                    <div class="relative">
+                      <span class="absolute inset-y-0 left-0 pl-2 flex items-center text-slate-400">+</span>
+                      <input type="number" id="hSpread" value="1.30" step="0.01" min="0" max="10" class="w-full pl-5 p-1.5 border border-slate-300 rounded bg-white font-mono text-xs">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-2 pt-1 border-t border-emerald-200/50">
+                  <div>
+                    <label for="primeRateForH" class="text-slate-600 block mb-0.5">Cap Prime P (%)</label>
+                    <input type="number" id="primeRateForH" value="5.375" step="0.125" min="2" max="15" class="w-full p-1.5 border border-slate-300 rounded bg-white font-mono text-xs">
+                  </div>
+                  <div>
+                    <label for="primeCapSpread" class="text-slate-600 block mb-0.5">Cap Discount (%)</label>
+                    <div class="relative">
+                      <span class="absolute inset-y-0 left-0 pl-2 flex items-center text-slate-400">-</span>
+                      <input type="number" id="primeCapSpread" value="1.75" step="0.05" min="0" max="10" class="w-full pl-5 p-1.5 border border-slate-300 rounded bg-white font-mono text-xs">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="flex items-center justify-between pt-1">
+                  <span class="text-slate-500 text-[11px]">Uncapped: H+1.30% = <span id="uncappedHRate" class="font-mono">5.20%</span> | Cap: P-1.75% = <span id="capHRate" class="font-mono">3.625%</span></span>
+                  <span id="hCapStatusBadge" class="bg-amber-100 text-amber-800 text-[10px] px-1.5 py-0.5 rounded font-bold">CAP TRIGGERED</span>
+                </div>
+              </div>
+
+              <!-- P-Plan Parameters Container -->
+              <div id="pPlanInputs" class="bg-blue-50/50 p-3 rounded-xl border border-blue-100 space-y-2.5 text-xs hidden">
+                <div class="grid grid-cols-2 gap-2">
+                  <div>
+                    <label for="primeRatePPlan" class="text-slate-600 block mb-0.5">Prime Rate P (%)</label>
+                    <select id="primeRatePPlan" class="w-full p-1.5 border border-slate-300 rounded bg-white text-xs font-mono">
+                      <option value="5.375" selected>5.375% (Big P - HSBC/BOC/HASE)</option>
+                      <option value="5.625">5.625% (Small P - SCB/Citibank/BEA)</option>
+                      <option value="custom">Custom Prime</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label for="pDiscount" class="text-slate-600 block mb-0.5">Discount Rate (%)</label>
+                    <div class="relative">
+                      <span class="absolute inset-y-0 left-0 pl-2 flex items-center text-slate-400">-</span>
+                      <input type="number" id="pDiscount" value="1.75" step="0.05" min="0" max="10" class="w-full pl-5 p-1.5 border border-slate-300 rounded bg-white font-mono text-xs">
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Fixed Plan Parameters Container -->
+              <div id="fixedPlanInputs" class="bg-purple-50/50 p-3 rounded-xl border border-purple-100 space-y-2 text-xs hidden">
+                <div class="flex items-center justify-between">
+                  <label for="fixedAnnualRate" class="text-slate-700 font-medium">Fixed Mortgage Rate (%)</label>
+                  <input type="number" id="fixedAnnualRate" value="3.75" step="0.05" min="0.5" max="15" class="w-24 p-1.5 border border-slate-300 rounded bg-white font-mono text-xs text-right">
+                </div>
+                <p class="text-[10px] text-slate-500">HKMC or bank promotional fixed rate for 10-30 years protection against interest volatility.</p>
+              </div>
+
+              <!-- Effective Rate Banner -->
+              <div class="bg-slate-900 text-white p-3 rounded-xl flex items-center justify-between shadow-inner">
+                <div>
+                  <p class="text-[11px] text-slate-400 uppercase tracking-wider font-semibold">Effective Interest Rate (實際按息)</p>
+                  <p id="effectiveRateFormula" class="text-xs text-emerald-400">P - 1.75% (Cap applied)</p>
+                </div>
+                <div class="text-right">
+                  <span id="effectiveRateDisplay" class="text-2xl font-black text-white font-mono">3.625%</span>
+                  <span class="text-xs text-slate-400 block">p.a. (年利率)</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Bank Cash Rebate Input -->
+            <div class="pt-2 border-t border-slate-100">
+              <div class="flex items-center justify-between">
+                <label for="cashRebateRate" class="text-xs font-semibold text-slate-700">Bank Cash Rebate (銀行現金回贈 %)</label>
+                <div class="flex items-center gap-1">
+                  <input type="number" id="cashRebateRate" value="0.50" step="0.1" min="0" max="3" class="w-16 p-1 border border-slate-300 rounded bg-white font-mono text-xs text-right">
+                  <span class="text-xs text-slate-500">%</span>
+                </div>
+              </div>
+              <p class="text-[10px] text-slate-400 mt-0.5">HKMA Rule: If cash rebate exceeds 1%, the total rebate must be deducted from loan amount for LTV purposes.</p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Right Column: Results & Visual Dashboards (7 cols on lg) -->
+        <div class="lg:col-span-7 space-y-5">
+          
+          <!-- Key Repayment Hero Card -->
+          <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden">
+            <div class="absolute -right-10 -bottom-10 w-44 h-44 bg-emerald-50 rounded-full opacity-60 pointer-events-none"></div>
+
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-5">
+              <div>
+                <span class="text-xs font-semibold text-emerald-700 uppercase tracking-wider bg-emerald-50 px-2.5 py-1 rounded-full">Monthly Repayment</span>
+                <div class="mt-2 flex items-baseline gap-2">
+                  <span class="text-3xl sm:text-4xl font-extrabold text-slate-900 font-mono tracking-tight" id="monthlyRepaymentDisplay">HK$ 25,584</span>
+                  <span class="text-xs text-slate-500 font-medium">/ month</span>
+                </div>
+                <p id="biweeklyNote" class="text-xs text-slate-500 mt-1">Or <strong>HK$ 12,792</strong> every 2 weeks under Bi-weekly plan</p>
+              </div>
+
+              <!-- Quick Health Badges -->
+              <div class="bg-slate-50 border border-slate-200/80 p-3 rounded-xl flex flex-col gap-1 min-w-[210px]">
+                <div class="flex justify-between text-xs">
+                  <span class="text-slate-500">Min. Income Req:</span>
+                  <span id="minIncomeRequiredDisplay" class="font-bold text-slate-800 font-mono">HK$ 51,168</span>
+                </div>
+                <div class="flex justify-between text-xs">
+                  <span class="text-slate-500">Loan Amount:</span>
+                  <span id="loanAmountSummary" class="font-bold text-slate-800 font-mono">HK$ 5,600,000</span>
+                </div>
+                <div class="flex justify-between text-xs">
+                  <span class="text-slate-500">Down Payment:</span>
+                  <span id="downPaymentSummary" class="font-bold text-slate-800 font-mono">HK$ 2,400,000</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Key Financial Breakdown Metrics -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-5">
+              <div class="bg-slate-50 p-3 rounded-xl border border-slate-100">
+                <span class="text-[11px] text-slate-500 block">Total Principal</span>
+                <span id="totalPrincipalDisplay" class="text-sm font-bold text-slate-800 font-mono">HK$ 5,600,000</span>
+              </div>
+              <div class="bg-amber-50/60 p-3 rounded-xl border border-amber-100">
+                <span class="text-[11px] text-amber-700 block">Total Interest (30y)</span>
+                <span id="totalInterestDisplay" class="text-sm font-bold text-amber-900 font-mono">HK$ 3,610,240</span>
+              </div>
+              <div class="bg-slate-50 p-3 rounded-xl border border-slate-100">
+                <span class="text-[11px] text-slate-500 block">Total Repayment</span>
+                <span id="totalRepaymentDisplay" class="text-sm font-bold text-slate-800 font-mono">HK$ 9,210,240</span>
+              </div>
+              <div class="bg-emerald-50/60 p-3 rounded-xl border border-emerald-100">
+                <span class="text-[11px] text-emerald-700 block">Bank Cash Rebate</span>
+                <span id="cashRebateDisplay" class="text-sm font-bold text-emerald-800 font-mono">+HK$ 28,000</span>
+              </div>
+            </div>
+
+            <!-- Payment Breakdown Visual Bar -->
+            <div class="mt-5 space-y-1.5">
+              <div class="flex justify-between text-xs text-slate-600">
+                <span>First Month Breakdown:</span>
+                <span class="font-mono text-[11px]"><strong class="text-emerald-700" id="monthOnePrincipal">HK$ 8,667 (34%)</strong> Principal | <strong class="text-amber-700" id="monthOneInterest">HK$ 16,917 (66%)</strong> Interest</span>
+              </div>
+              <div class="h-3 w-full bg-slate-100 rounded-full flex overflow-hidden">
+                <div id="firstMonthPrincipalBar" style="width: 34%" class="bg-emerald-500 transition-all duration-500"></div>
+                <div id="firstMonthInterestBar" style="width: 66%" class="bg-amber-400 transition-all duration-500"></div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Upfront Acquisition Costs Card (Hong Kong Specific) -->
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+              <div>
+                <h3 class="text-sm font-bold text-slate-900">Total Upfront Cash Required (首期及置業開支)</h3>
+                <p class="text-xs text-slate-500">Everything needed at provisional S&P signing and completion</p>
+              </div>
+              <span id="totalUpfrontCashDisplay" class="text-lg font-black text-emerald-700 font-mono">HK$ 2,752,000</span>
+            </div>
+
+            <div class="space-y-2 text-xs">
+              <div class="flex items-center justify-between py-1 border-b border-slate-100">
+                <span class="text-slate-600 flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Down Payment (首期)
+                </span>
+                <span id="costDownPayment" class="font-mono font-semibold text-slate-800">HK$ 2,400,000</span>
+              </div>
+
+              <div class="flex items-center justify-between py-1 border-b border-slate-100">
+                <span class="text-slate-600 flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-blue-500"></span> 
+                  Ad Valorem Stamp Duty (從價印花稅 Scale 2)
+                  <span class="text-[10px] text-slate-400" id="stampDutyEffectiveRate">(3.00%)</span>
+                </span>
+                <span id="costStampDuty" class="font-mono font-semibold text-slate-800">HK$ 240,000</span>
+              </div>
+
+              <div class="flex items-center justify-between py-1 border-b border-slate-100">
+                <span class="text-slate-600 flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-indigo-500"></span> Estate Agent Commission (代理佣金 1%)
+                </span>
+                <span id="costAgentCommission" class="font-mono font-semibold text-slate-800">HK$ 80,000</span>
+              </div>
+
+              <div class="flex items-center justify-between py-1 border-b border-slate-100">
+                <span class="text-slate-600 flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-slate-400"></span> Solicitor & Legal Fees (律師費/按揭契)
+                </span>
+                <span id="costLegalFees" class="font-mono font-semibold text-slate-800">HK$ 10,000</span>
+              </div>
+
+              <div id="costMIPRow" class="flex items-center justify-between py-1 border-b border-slate-100 hidden">
+                <span class="text-purple-700 flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-purple-500"></span> HKMC Mortgage Insurance (按揭保費)
+                  <span id="costMIPFinancedNote" class="text-[10px] bg-purple-100 text-purple-700 px-1 rounded">Financed into loan</span>
+                </span>
+                <span id="costMIPDisplay" class="font-mono font-semibold text-purple-700">HK$ 0</span>
+              </div>
+
+              <div class="flex items-center justify-between py-1 border-b border-slate-100 text-emerald-700">
+                <span class="flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Less: Bank Cash Rebate (扣減: 銀行回贈)
+                </span>
+                <span id="costCashRebateDeduction" class="font-mono font-semibold">- HK$ 28,000</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Ongoing Monthly Holding Costs (Rates, Rent, Management Fee) -->
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+              <div>
+                <h3 class="text-sm font-bold text-slate-900">Total Monthly Housing Outlay (每月總住屋開支)</h3>
+                <p class="text-xs text-slate-500">Includes mortgage, government rates, rent & estate management fees</p>
+              </div>
+              <span id="totalMonthlyHousingOutlay" class="text-lg font-black text-slate-900 font-mono">HK$ 29,484</span>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+              <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-100">
+                <span class="text-slate-500 block mb-0.5">Govt Rates (差餉 5%)</span>
+                <span id="monthlyRatesDisplay" class="font-bold text-slate-800 font-mono">HK$ 1,500/mo</span>
+                <span class="text-[10px] text-slate-400 block">HK$ 4,500/quarter</span>
+              </div>
+              <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-100">
+                <span class="text-slate-500 block mb-0.5">Govt Rent (地租 3%)</span>
+                <span id="monthlyGovtRentDisplay" class="font-bold text-slate-800 font-mono">HK$ 900/mo</span>
+                <span class="text-[10px] text-slate-400 block">Applicable to post-97 leases</span>
+              </div>
+              <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-100">
+                <span class="text-slate-500 block mb-0.5">Management Fee (管理費)</span>
+                <span id="monthlyMgtFeeDisplay" class="font-bold text-slate-800 font-mono">HK$ 1,500/mo</span>
+                <span class="text-[10px] text-slate-400 block">Est. 500 sq ft @ $3.0/ft</span>
+              </div>
+            </div>
+
+            <!-- Holding Cost Settings Collapse -->
+            <div class="pt-2">
+              <details class="text-xs text-slate-600">
+                <summary class="cursor-pointer font-medium text-emerald-700 hover:text-emerald-800">Customize Holding Cost Assumptions ⚙️</summary>
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mt-3 p-3 bg-slate-50 rounded-xl border border-slate-200">
+                  <div>
+                    <label for="estRateableRatio" class="block text-[11px] text-slate-500 mb-1">Rateable Val % of Price</label>
+                    <input type="number" id="estRateableRatio" value="4.5" step="0.5" class="w-full p-1.5 border border-slate-300 rounded bg-white font-mono text-xs">
+                  </div>
+                  <div>
+                    <label for="propertySaleArea" class="block text-[11px] text-slate-500 mb-1">Saleable Area (sq ft)</label>
+                    <input type="number" id="propertySaleArea" value="500" step="50" class="w-full p-1.5 border border-slate-300 rounded bg-white font-mono text-xs">
+                  </div>
+                  <div>
+                    <label for="mgtFeePerSqFt" class="block text-[11px] text-slate-500 mb-1">Mgt Fee (HK$/sq ft)</label>
+                    <input type="number" id="mgtFeePerSqFt" value="3.0" step="0.5" class="w-full p-1.5 border border-slate-300 rounded bg-white font-mono text-xs">
+                  </div>
+                </div>
+              </details>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Bottom Interactive Visual: Loan Amortization Graph Overview -->
+      <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-4 border-b border-slate-100 gap-2">
+          <div>
+            <h3 class="text-base font-bold text-slate-900">30-Year Loan Balance & Equity Progression</h3>
+            <p class="text-xs text-slate-500">Track how principal amortizes and equity builds over the lifetime of your loan</p>
+          </div>
+          <div class="flex items-center gap-3 text-xs">
+            <span class="flex items-center gap-1.5"><span class="w-3 h-3 bg-emerald-500 rounded-sm"></span> Principal Balance</span>
+            <span class="flex items-center gap-1.5"><span class="w-3 h-3 bg-amber-400 rounded-sm"></span> Cumulative Interest</span>
+          </div>
+        </div>
+        <div class="relative h-72 w-full mt-3">
+          <canvas id="overviewAmortizationChart"></canvas>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ==================== TAB 2: AFFORDABILITY & STRESS TEST ==================== -->
+    <div id="tab-affordability" class="tab-pane hidden space-y-6">
+      
+      <!-- Top Alert & Regulatory Clarification -->
+      <div class="bg-gradient-to-r from-hkblue-50 to-indigo-50 border border-hkblue-200 p-4 rounded-2xl flex items-start gap-3">
+        <span class="text-2xl">🏛️</span>
+        <div class="text-xs text-slate-700 space-y-1">
+          <p class="font-bold text-hkblue-900 text-sm">HKMA Countercyclical Regulatory Baseline (Updated)</p>
+          <p>
+            Under the current HKMA framework, the <strong>Debt Servicing Ratio (DSR)</strong> is standardized at <strong>50%</strong> for both self-use and rental properties. 
+            While the mandatory +200 bps interest rate stress test was suspended in February 2024, licensed banks and prudent borrowers continue to perform stress simulations to ensure long-term resilience against rate shocks.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- Income & Liabilities Input -->
+        <div class="lg:col-span-5 bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+          <h3 class="text-sm font-bold text-slate-900 border-b border-slate-100 pb-2">Household Income & Liabilities</h3>
+          
+          <div>
+            <label for="monthlyIncome" class="text-xs font-semibold text-slate-700 block mb-1">Monthly Household Income (家庭每月入息)</label>
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 text-sm">HK$</span>
+              <input type="number" id="monthlyIncome" value="65000" min="10000" max="1000000" step="1000" class="w-full pl-11 pr-3 py-2 border border-slate-300 rounded-lg text-sm font-mono focus:ring-2 focus:ring-emerald-500 outline-none">
+            </div>
+            <div class="flex gap-1.5 mt-2">
+              <button type="button" class="income-preset-btn px-2 py-0.5 text-xs bg-slate-100 hover:bg-slate-200 rounded font-medium" data-val="40000">$40k</button>
+              <button type="button" class="income-preset-btn px-2 py-0.5 text-xs bg-emerald-50 text-emerald-700 border border-emerald-200 rounded font-semibold" data-val="65000">$65k</button>
+              <button type="button" class="income-preset-btn px-2 py-0.5 text-xs bg-slate-100 hover:bg-slate-200 rounded font-medium" data-val="90000">$90k</button>
+              <button type="button" class="income-preset-btn px-2 py-0.5 text-xs bg-slate-100 hover:bg-slate-200 rounded font-medium" data-val="120000">$120k</button>
+              <button type="button" class="income-preset-btn px-2 py-0.5 text-xs bg-slate-100 hover:bg-slate-200 rounded font-medium" data-val="150000">$150k</button>
+            </div>
+          </div>
+
+          <div>
+            <label for="existingMonthlyDebt" class="text-xs font-semibold text-slate-700 block mb-1">Other Existing Monthly Debts (其他債務月供)</label>
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 text-sm">HK$</span>
+              <input type="number" id="existingMonthlyDebt" value="0" min="0" max="200000" step="500" class="w-full pl-11 pr-3 py-2 border border-slate-300 rounded-lg text-sm font-mono focus:ring-2 focus:ring-emerald-500 outline-none">
+            </div>
+            <p class="text-[10px] text-slate-400 mt-1">Car loans, personal loans, student loans, or credit card installments.</p>
+          </div>
+
+          <div>
+            <label for="availableSavings" class="text-xs font-semibold text-slate-700 block mb-1">Total Available Cash Savings (現有首期儲蓄)</label>
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 text-sm">HK$</span>
+              <input type="number" id="availableSavings" value="3000000" min="200000" max="50000000" step="100000" class="w-full pl-11 pr-3 py-2 border border-slate-300 rounded-lg text-sm font-mono focus:ring-2 focus:ring-emerald-500 outline-none">
+            </div>
+            <p class="text-[10px] text-slate-400 mt-1">Used to calculate your maximum purchasing power.</p>
+          </div>
+
+          <!-- Stress Test Bps Selector -->
+          <div class="pt-2 border-t border-slate-100">
+            <label for="stressTestBps" class="text-xs font-semibold text-slate-700 block mb-1">Simulated Rate Shock (+bps 壓力測試利率增幅)</label>
+            <div class="flex items-center gap-2">
+              <select id="stressTestBps" class="w-full p-2 border border-slate-300 rounded-lg text-xs font-mono bg-white">
+                <option value="200" selected>+200 bps (+2.0% - Former HKMA Benchmark)</option>
+                <option value="250">+250 bps (+2.5% - Severe Shock)</option>
+                <option value="150">+150 bps (+1.5% - Moderate Shock)</option>
+                <option value="300">+300 bps (+3.0% - Historical Peak Shock)</option>
+              </select>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- DSR & Stress Test Results Display -->
+        <div class="lg:col-span-7 space-y-5">
+          
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-5">
+            <h3 class="text-sm font-bold text-slate-900 border-b border-slate-100 pb-2">DSR & Stress Test Scorecard</h3>
+
+            <!-- Baseline DSR Card -->
+            <div class="p-4 rounded-xl border border-slate-200 bg-slate-50 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div>
+                <span class="text-xs text-slate-500 font-semibold uppercase tracking-wider">Current DSR (基本供款與入息比率)</span>
+                <div class="flex items-baseline gap-2 mt-1">
+                  <span id="currentDsrDisplay" class="text-3xl font-black text-slate-900 font-mono">39.4%</span>
+                  <span class="text-xs text-slate-500 font-medium">/ 50.0% Max</span>
+                </div>
+                <p class="text-[11px] text-slate-500 mt-1">Total Monthly Debt: <strong id="totalDebtMonthlyDisplay" class="font-mono">HK$ 25,584</strong></p>
+              </div>
+
+              <div id="baselineDsrBadge" class="px-4 py-2 rounded-xl text-center font-bold text-xs bg-emerald-100 text-emerald-800 border border-emerald-300 shadow-sm">
+                ✅ PASSES HKMA LIMIT<br><span class="text-[10px] font-normal">Within 50% limit</span>
+              </div>
+            </div>
+
+            <!-- Stressed DSR Card -->
+            <div class="p-4 rounded-xl border border-slate-200 bg-slate-50 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div>
+                <span class="text-xs text-slate-500 font-semibold uppercase tracking-wider">Simulated Stressed DSR (受壓後供款比率)</span>
+                <div class="flex items-baseline gap-2 mt-1">
+                  <span id="stressedDsrDisplay" class="text-3xl font-black text-slate-900 font-mono">49.7%</span>
+                  <span class="text-xs text-slate-500 font-medium">/ 60.0% Limit</span>
+                </div>
+                <p class="text-[11px] text-slate-500 mt-1">Stressed Payment (@ <span id="stressedRateDisplay" class="font-mono">5.625%</span>): <strong id="stressedMonthlyPaymentDisplay" class="font-mono">HK$ 32,284</strong></p>
+              </div>
+
+              <div id="stressedDsrBadge" class="px-4 py-2 rounded-xl text-center font-bold text-xs bg-emerald-100 text-emerald-800 border border-emerald-300 shadow-sm">
+                ✅ PASSES STRESS TEST<br><span class="text-[10px] font-normal">Under 60% threshold</span>
+              </div>
+            </div>
+
+            <!-- Visual DSR Gauge Bar -->
+            <div class="space-y-2">
+              <div class="flex justify-between text-xs text-slate-600 font-medium">
+                <span>DSR Utilization:</span>
+                <span id="dsrBarLabel">39.4% of Income</span>
+              </div>
+              <div class="h-4 w-full bg-slate-100 rounded-full overflow-hidden flex relative border border-slate-200">
+                <div id="dsrProgressBar" style="width: 39.4%" class="bg-emerald-500 transition-all duration-500"></div>
+                <!-- 50% Marker Line -->
+                <div class="absolute left-1/2 top-0 bottom-0 w-0.5 bg-red-500 z-10" title="HKMA 50% Cap"></div>
+              </div>
+              <div class="flex justify-between text-[10px] text-slate-400">
+                <span>0%</span>
+                <span class="text-slate-500 font-bold">25%</span>
+                <span class="text-red-500 font-bold">50% HKMA Limit</span>
+                <span>75%</span>
+                <span>100%</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Purchasing Power Reverse Calculator Card -->
+          <div class="bg-gradient-to-br from-emerald-900 to-slate-900 text-white p-5 rounded-2xl shadow-md space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-700/80 pb-3">
+              <div>
+                <span class="text-[10px] uppercase font-bold text-emerald-400 tracking-wider">Reverse Affordability Engine</span>
+                <h4 class="text-sm font-bold text-white">Your Maximum Purchasing Power in Hong Kong</h4>
+              </div>
+              <span class="text-2xl">🏡</span>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div class="bg-slate-800/80 p-3.5 rounded-xl border border-slate-700">
+                <span class="text-xs text-slate-400 block mb-1">Max Affordable Property Price</span>
+                <span id="maxAffordablePropPrice" class="text-xl sm:text-2xl font-black text-emerald-400 font-mono">HK$ 10,150,000</span>
+                <p class="text-[10px] text-slate-400 mt-1">Based on 50% DSR cap & HK$ 3,000,000 cash savings.</p>
+              </div>
+              <div class="bg-slate-800/80 p-3.5 rounded-xl border border-slate-700">
+                <span class="text-xs text-slate-400 block mb-1">Maximum Bank Loan Capacity</span>
+                <span id="maxAffordableLoanAmount" class="text-xl sm:text-2xl font-black text-white font-mono">HK$ 7,105,000</span>
+                <p class="text-[10px] text-slate-400 mt-1">Max monthly installment allowed: <strong id="maxMonthlyBudget" class="text-slate-200">HK$ 32,500</strong></p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ==================== TAB 3: AMORTIZATION & EARLY REPAYMENT ==================== -->
+    <div id="tab-amortization" class="tab-pane hidden space-y-6">
+
+      <!-- Lump Sum & Early Repayment Simulator -->
+      <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-3 border-b border-slate-100 gap-2">
+          <div>
+            <h3 class="text-sm font-bold text-slate-900">Early Repayment & Prepayment Simulator (提早還款分析)</h3>
+            <p class="text-xs text-slate-500">Simulate partial lump-sum payments and penalty periods across Hong Kong banks</p>
+          </div>
+          <span class="text-xs bg-emerald-50 text-emerald-700 border border-emerald-200 px-2.5 py-1 rounded-full font-medium">Interest Saver Tool</span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+          <div>
+            <label for="prepaymentAmount" class="font-semibold text-slate-700 block mb-1">Lump-Sum Prepayment (額外還本金額)</label>
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 pl-2.5 flex items-center text-slate-400 font-medium">HK$</span>
+              <input type="number" id="prepaymentAmount" value="300000" step="50000" min="0" max="5000000" class="w-full pl-9 pr-2 py-2 border border-slate-300 rounded-lg font-mono">
+            </div>
+          </div>
+
+          <div>
+            <label for="prepaymentYear" class="font-semibold text-slate-700 block mb-1">Repayment Timing (於哪一年提早還款)</label>
+            <select id="prepaymentYear" class="w-full py-2 px-2.5 border border-slate-300 rounded-lg bg-white font-mono">
+              <option value="1">Year 1 (Within 1st Year - Lock-in)</option>
+              <option value="2">Year 2 (Within 2nd Year - Lock-in)</option>
+              <option value="3" selected>Year 3 (After 2-Year Lock-in Period)</option>
+              <option value="5">Year 5</option>
+              <option value="10">Year 10</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="prepaymentStrategy" class="font-semibold text-slate-700 block mb-1">Strategy (提早還款策略)</label>
+            <select id="prepaymentStrategy" class="w-full py-2 px-2.5 border border-slate-300 rounded-lg bg-white font-medium">
+              <option value="reduce_payment" selected>Reduce Monthly Payment (減少月供)</option>
+              <option value="shorten_term">Shorten Loan Tenure (縮短年期)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Prepayment Impact Summary Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+          <div class="p-3 bg-emerald-50 border border-emerald-200 rounded-xl">
+            <span class="text-xs text-emerald-800 font-semibold block mb-0.5">Total Interest Saved (節省利息)</span>
+            <span id="prepayInterestSaved" class="text-lg font-extrabold text-emerald-700 font-mono">HK$ 318,450</span>
+            <span class="text-[10px] text-emerald-600 block mt-0.5">Compounded over remaining loan term</span>
+          </div>
+          <div class="p-3 bg-blue-50 border border-blue-200 rounded-xl">
+            <span class="text-xs text-blue-800 font-semibold block mb-0.5">New Monthly Payment / Tenure</span>
+            <span id="prepayNewPaymentDisplay" class="text-lg font-extrabold text-blue-700 font-mono">HK$ 24,198/mo</span>
+            <span id="prepayPaymentDelta" class="text-[10px] text-blue-600 block mt-0.5">Reduces payment by HK$ 1,386/mo</span>
+          </div>
+          <div class="p-3 bg-amber-50 border border-amber-200 rounded-xl">
+            <span class="text-xs text-amber-800 font-semibold block mb-0.5">Bank Lock-in Penalty (罰息期)</span>
+            <span id="prepayPenaltyDisplay" class="text-lg font-extrabold text-amber-700 font-mono">HK$ 0 (No Penalty)</span>
+            <span id="prepayPenaltyNote" class="text-[10px] text-amber-600 block mt-0.5">Outside typical 2-year clawback</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Amortization Schedule Table -->
+      <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-3 border-b border-slate-100 gap-2">
+          <div>
+            <h3 class="text-sm font-bold text-slate-900">Full Amortization Schedule (逐年還款時間表)</h3>
+            <p class="text-xs text-slate-500">Year-by-year breakdown of principal, interest, and remaining balance</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <button id="exportCsvBtn" class="px-3 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-medium flex items-center gap-1 transition">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+              Export CSV
+            </button>
+          </div>
+        </div>
+
+        <div class="overflow-x-auto max-h-96 custom-scrollbar border border-slate-100 rounded-xl">
+          <table class="w-full text-left text-xs">
+            <thead class="bg-slate-100/80 text-slate-700 sticky top-0 uppercase tracking-wider text-[10px]">
+              <tr>
+                <th class="py-2.5 px-3 font-semibold">Year</th>
+                <th class="py-2.5 px-3 font-semibold text-right">Annual Repayment</th>
+                <th class="py-2.5 px-3 font-semibold text-right">Principal Paid</th>
+                <th class="py-2.5 px-3 font-semibold text-right">Interest Paid</th>
+                <th class="py-2.5 px-3 font-semibold text-right">Cumulative Interest</th>
+                <th class="py-2.5 px-3 font-semibold text-right">Remaining Balance</th>
+              </tr>
+            </thead>
+            <tbody id="amortizationTableBody" class="divide-y divide-slate-100 font-mono">
+              <!-- Dynamically Populated by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ==================== TAB 4: MORTGAGE-LINK SAVINGS SAVER ==================== -->
+    <div id="tab-mortgagelink" class="tab-pane hidden space-y-6">
+
+      <!-- Mortgage-Link Explainer -->
+      <div class="bg-gradient-to-r from-emerald-50 via-teal-50 to-brand-50 border border-emerald-200 p-5 rounded-2xl flex items-start gap-4">
+        <span class="text-3xl">💡</span>
+        <div class="text-xs text-slate-700 space-y-1">
+          <h3 class="font-bold text-emerald-950 text-sm">What is a Mortgage-Link Account? (按揭高息存息戶口)</h3>
+          <p>
+            In Hong Kong, major mortgage lenders (such as HSBC, Bank of China, Hang Seng, Standard Chartered) bundle a <strong>high-interest deposit account</strong> with your mortgage. 
+            The interest rate on your eligible deposit equals your mortgage loan rate (e.g., <strong>3.625%</strong>), effectively offsetting interest payments dollar-for-dollar.
+          </p>
+          <p class="text-emerald-800 font-medium">
+            ★ HKMA & Bank Cap: The preferential deposit balance is capped at <strong>50%</strong> of your daily outstanding mortgage loan balance. Interest earned is completely tax-free in HK.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+        <!-- Controls -->
+        <div class="lg:col-span-5 bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+          <h4 class="text-sm font-bold text-slate-900 border-b border-slate-100 pb-2">Mortgage-Link Savings Parameters</h4>
+
+          <div>
+            <div class="flex justify-between items-center mb-1">
+              <label for="mlDepositAmount" class="text-xs font-semibold text-slate-700">Initial Deposit Balance (存入金額)</label>
+              <span id="mlDepositDisplay" class="text-xs font-mono font-bold text-emerald-700">HK$ 800,000</span>
+            </div>
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400 font-medium text-sm">HK$</span>
+              <input type="number" id="mlDepositAmount" value="800000" min="0" max="10000000" step="50000" class="w-full pl-11 pr-3 py-2 border border-slate-300 rounded-lg text-sm font-mono">
+            </div>
+            <div class="flex gap-1.5 mt-2">
+              <button type="button" class="ml-preset-btn px-2 py-0.5 text-xs bg-slate-100 hover:bg-slate-200 rounded font-medium" data-val="300000">$300k</button>
+              <button type="button" class="ml-preset-btn px-2 py-0.5 text-xs bg-slate-100 hover:bg-slate-200 rounded font-medium" data-val="500000">$500k</button>
+              <button type="button" class="ml-preset-btn px-2 py-0.5 text-xs bg-emerald-50 text-emerald-700 border border-emerald-200 rounded font-semibold" data-val="800000">$800k</button>
+              <button type="button" class="ml-preset-btn px-2 py-0.5 text-xs bg-slate-100 hover:bg-slate-200 rounded font-medium" data-val="1500000">$1.5M</button>
+              <button type="button" class="ml-preset-btn px-2 py-0.5 text-xs bg-slate-100 hover:bg-slate-200 rounded font-medium" data-val="2500000">$2.5M</button>
+            </div>
+          </div>
+
+          <div>
+            <label for="mlMonthlyAddition" class="text-xs font-semibold text-slate-700 block mb-1">Ongoing Monthly Savings Add-in (每月額外存入)</label>
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400 font-medium text-sm">HK$</span>
+              <input type="number" id="mlMonthlyAddition" value="5000" min="0" max="100000" step="1000" class="w-full pl-11 pr-3 py-2 border border-slate-300 rounded-lg text-sm font-mono">
+            </div>
+          </div>
+
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-2 text-xs">
+            <div class="flex justify-between">
+              <span class="text-slate-500">Maximum Eligible Cap:</span>
+              <span id="mlCapDisplay" class="font-bold font-mono text-slate-800">HK$ 2,800,000 (50% of Loan)</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-slate-500">Preferential Interest Rate:</span>
+              <span id="mlInterestRateDisplay" class="font-bold font-mono text-emerald-700">3.625% p.a.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ML Results & Offset Metrics -->
+        <div class="lg:col-span-7 bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+          <h4 class="text-sm font-bold text-slate-900 border-b border-slate-100 pb-2">Interest Offset & Savings Impact</h4>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div class="p-3.5 bg-emerald-50 border border-emerald-200 rounded-xl">
+              <span class="text-[11px] text-emerald-800 font-semibold block">Total Savings Interest Earned</span>
+              <span id="mlTotalInterestEarned" class="text-xl font-black text-emerald-700 font-mono">HK$ 870,000</span>
+              <span class="text-[10px] text-emerald-600 block mt-0.5">High-interest offset</span>
+            </div>
+            <div class="p-3.5 bg-blue-50 border border-blue-200 rounded-xl">
+              <span class="text-[11px] text-blue-800 font-semibold block">Net Mortgage Interest Paid</span>
+              <span id="mlNetInterestPaid" class="text-xl font-black text-blue-700 font-mono">HK$ 2,740,240</span>
+              <span class="text-[10px] text-blue-600 block mt-0.5">Gross Interest - ML Interest</span>
+            </div>
+            <div class="p-3.5 bg-purple-50 border border-purple-200 rounded-xl">
+              <span class="text-[11px] text-purple-800 font-semibold block">Effective Interest Rate</span>
+              <span id="mlEffectiveRateNet" class="text-xl font-black text-purple-700 font-mono">2.75%</span>
+              <span class="text-[10px] text-purple-600 block mt-0.5">Net financing cost</span>
+            </div>
+          </div>
+
+          <div class="relative h-64 w-full pt-2">
+            <canvas id="mortgageLinkChart"></canvas>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ==================== TAB 5: PLAN COMPARISON ==================== -->
+    <div id="tab-comparison" class="tab-pane hidden space-y-6">
+
+      <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+          <div>
+            <h3 class="text-base font-bold text-slate-900">Side-by-Side Scheme Comparison (H按 vs P按 vs 定息)</h3>
+            <p class="text-xs text-slate-500">Compare monthly commitment, total interest, and volatility profiles</p>
+          </div>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-xs text-left">
+            <thead class="bg-slate-50 text-slate-600 uppercase text-[10px] tracking-wider border-y border-slate-200">
+              <tr>
+                <th class="py-3 px-4">Metric / Feature</th>
+                <th class="py-3 px-4 font-bold text-emerald-700">H-Plan (HIBOR-based)</th>
+                <th class="py-3 px-4 font-bold text-blue-700">P-Plan (Prime-based)</th>
+                <th class="py-3 px-4 font-bold text-purple-700">Fixed Rate Plan (定息按揭)</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100">
+              <tr>
+                <td class="py-3 px-4 font-semibold text-slate-800">Formula</td>
+                <td class="py-3 px-4 font-mono text-emerald-800">H + 1.30% (Cap: P-1.75%)</td>
+                <td class="py-3 px-4 font-mono text-blue-800">P - 1.75%</td>
+                <td class="py-3 px-4 font-mono text-purple-800">Fixed at 3.75%</td>
+              </tr>
+              <tr>
+                <td class="py-3 px-4 font-semibold text-slate-800">Effective Interest Rate</td>
+                <td id="compRateH" class="py-3 px-4 font-mono font-bold text-emerald-700 text-sm">3.625%</td>
+                <td id="compRateP" class="py-3 px-4 font-mono font-bold text-blue-700 text-sm">3.625%</td>
+                <td id="compRateF" class="py-3 px-4 font-mono font-bold text-purple-700 text-sm">3.750%</td>
+              </tr>
+              <tr>
+                <td class="py-3 px-4 font-semibold text-slate-800">Monthly Repayment</td>
+                <td id="compPaymentH" class="py-3 px-4 font-mono font-bold text-slate-900">HK$ 25,584</td>
+                <td id="compPaymentP" class="py-3 px-4 font-mono font-bold text-slate-900">HK$ 25,584</td>
+                <td id="compPaymentF" class="py-3 px-4 font-mono font-bold text-slate-900">HK$ 25,978</td>
+              </tr>
+              <tr>
+                <td class="py-3 px-4 font-semibold text-slate-800">Total Interest (30 Yrs)</td>
+                <td id="compInterestH" class="py-3 px-4 font-mono text-slate-800">HK$ 3,610,240</td>
+                <td id="compInterestP" class="py-3 px-4 font-mono text-slate-800">HK$ 3,610,240</td>
+                <td id="compInterestF" class="py-3 px-4 font-mono text-slate-800">HK$ 3,752,080</td>
+              </tr>
+              <tr>
+                <td class="py-3 px-4 font-semibold text-slate-800">Interest Rate Upside Risk</td>
+                <td class="py-3 px-4 text-slate-600">Protected by Prime Cap Ceiling</td>
+                <td class="py-3 px-4 text-slate-600">Rises if HK Prime increases</td>
+                <td class="py-3 px-4 text-slate-600">Zero upside risk (100% Locked)</td>
+              </tr>
+              <tr>
+                <td class="py-3 px-4 font-semibold text-slate-800">Interest Rate Downside Benefit</td>
+                <td class="py-3 px-4 text-emerald-700 font-medium">Full immediate benefit if HIBOR falls</td>
+                <td class="py-3 px-4 text-slate-600">Only if bank announces Prime cut</td>
+                <td class="py-3 px-4 text-slate-600">No benefit (Cannot drop below fixed)</td>
+              </tr>
+              <tr>
+                <td class="py-3 px-4 font-semibold text-slate-800">Market Share in HK</td>
+                <td class="py-3 px-4 text-emerald-800 font-bold">&gt; 90% of HK Borrowers</td>
+                <td class="py-3 px-4 text-slate-600">~ 2 - 5%</td>
+                <td class="py-3 px-4 text-slate-600">&lt; 1%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ==================== TAB 6: HK REGULATORY GUIDE ==================== -->
+    <div id="tab-guide" class="tab-pane hidden space-y-6">
+
+      <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-6 text-xs text-slate-700 leading-relaxed">
+        <div class="border-b border-slate-200 pb-3">
+          <h3 class="text-base font-bold text-slate-900">Hong Kong Mortgage Rules, Stamp Duty & Policies Summary</h3>
+          <p class="text-slate-500">Current regulatory reference guide based on official HKMA, IRD, and HKMC guidelines</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          
+          <!-- HKMA LTV Framework -->
+          <div class="space-y-2 p-4 bg-slate-50 rounded-xl border border-slate-200">
+            <h4 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+              <span>🏛️</span> 1. HKMA Loan-to-Value (LTV) Ratios
+            </h4>
+            <p>
+              Following the adjustments announced on <strong>16 October 2024</strong>:
+            </p>
+            <ul class="list-disc pl-4 space-y-1 text-slate-600">
+              <li><strong>Standardized Bank Cap: 70% LTV</strong> across all residential properties regardless of property value or whether self-occupied.</li>
+              <li>Applicable to both income-assessed and net-worth-assessed mortgage borrowers.</li>
+              <li>Non-residential properties (offices, industrial, shops) standardized at 70% LTV.</li>
+              <li>The 10% penalty reduction for borrowers with existing mortgages was fully lifted.</li>
+            </ul>
+          </div>
+
+          <!-- HKMC Mortgage Insurance Programme -->
+          <div class="space-y-2 p-4 bg-slate-50 rounded-xl border border-slate-200">
+            <h4 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+              <span>🛡️</span> 2. Mortgage Insurance Programme (HKMC MIP)
+            </h4>
+            <p>Allows owner-occupiers to borrow above the 70% bank ceiling:</p>
+            <ul class="list-disc pl-4 space-y-1 text-slate-600">
+              <li><strong>Up to 90% LTV:</strong> Properties with values up to <strong>HK$ 10,000,000</strong> for first-time home buyers.</li>
+              <li><strong>Up to 80% LTV:</strong> Properties with values between <strong>HK$ 10,000,000 and HK$ 15,000,000</strong>.</li>
+              <li>Properties up to <strong>HK$ 30,000,000</strong> eligible under sliding scale.</li>
+              <li>Single premium can be financed directly into the mortgage loan.</li>
+              <li>Participating banks routinely offer an approximate <strong>35% discount</strong> on the standard MIP premium.</li>
+            </ul>
+          </div>
+
+          <!-- Ad Valorem Stamp Duty Scale 2 -->
+          <div class="space-y-2 p-4 bg-slate-50 rounded-xl border border-slate-200">
+            <h4 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+              <span>📑</span> 3. Ad Valorem Stamp Duty (AVD Scale 2)
+            </h4>
+            <p>
+              Following the 2024 Budget repeal of Buyer's Stamp Duty (BSD), New Residential Stamp Duty (NRSD), and Special Stamp Duty (SSD), <strong>Scale 2 rates</strong> apply:
+            </p>
+            <ul class="list-disc pl-4 space-y-1 text-slate-600">
+              <li>Up to HK$ 3,000,000: Flat <strong>HK$ 100</strong>.</li>
+              <li>HK$ 3,000,001 - HK$ 3,528,240: HK$ 100 + 10% of excess over HK$ 3M.</li>
+              <li>HK$ 3,528,241 - HK$ 4,500,000: <strong>1.50%</strong>.</li>
+              <li>HK$ 4,500,001 - HK$ 5,316,000: HK$ 67,500 + 10% of excess over HK$ 4.5M.</li>
+              <li>HK$ 5,316,001 - HK$ 7,200,000: <strong>2.25%</strong>.</li>
+              <li>HK$ 7,200,001 - HK$ 8,294,030: HK$ 162,000 + 10% of excess over HK$ 7.2M.</li>
+              <li>HK$ 8,294,031 - HK$ 10,000,000: <strong>3.00%</strong>.</li>
+              <li>HK$ 10,000,001 - HK$ 10,757,400: HK$ 300,000 + 10% of excess over HK$ 10M.</li>
+              <li>HK$ 10,757,401 - HK$ 20,000,000: <strong>3.75%</strong>.</li>
+              <li>Over HK$ 21,739,120: <strong>4.25%</strong>.</li>
+            </ul>
+          </div>
+
+          <!-- Debt Servicing & Rates/Rent -->
+          <div class="space-y-2 p-4 bg-slate-50 rounded-xl border border-slate-200">
+            <h4 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+              <span>⚖️</span> 4. DSR, Rates, Rent & Lock-In Penalty
+            </h4>
+            <ul class="list-disc pl-4 space-y-1 text-slate-600">
+              <li><strong>DSR Cap: 50%</strong> standardized across self-use and letting properties.</li>
+              <li><strong>Government Rates:</strong> 5% of estimated rateable annual rental value (billed quarterly).</li>
+              <li><strong>Government Rent:</strong> 3% of rateable value (applies to properties in New Territories and post-1997 leases).</li>
+              <li><strong>Bank Cash Rebates:</strong> If greater than 1%, HKMA mandates that the rebate amount must be accounted for by deducting from the mortgage loan amount.</li>
+              <li><strong>Early Redemption Penalty:</strong> Hong Kong banks enforce a 1 to 2-year lock-in period. Prepayment within year 1 incurs ~1-2% penalty plus rebate clawback.</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- In-Page Toast Container -->
+  <div id="toastNotification" class="fixed bottom-5 right-5 bg-slate-900 text-white px-4 py-2.5 rounded-xl shadow-xl text-xs font-medium flex items-center gap-2 transform translate-y-20 opacity-0 transition-all duration-300 z-50 pointer-events-none">
+    <span class="text-emerald-400">✓</span>
+    <span id="toastMessage">Action completed successfully</span>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-500 no-print">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
+      <p><strong>hkmortgagemaster.app</strong> © 2026 • HK Mortgage Master (香港按揭計算機) for Homebuyers &amp; Investors</p>
+      <p class="text-[11px] text-slate-400">Calculations based on HKMA 70% LTV guidelines, IRD Scale 2 Stamp Duty &amp; HKMC MIP schedule.</p>
+    </div>
+  </footer>
+
+  <!-- Application Logic -->
+  <script>
+    // State Store
+    const state = {
+      price: 8000000,
+      ltv: 70,
+      propertyType: 'private',
+      buyerStatus: 'first_time',
+      propertyUsage: 'self_use',
+      borrowerAge: 32,
+      tenureYears: 30,
+      repaymentFreq: 'monthly',
+      planType: 'H', // 'H', 'P', 'Fixed'
+      hibor: 3.90,
+      hSpread: 1.30,
+      primeH: 5.375,
+      capDiscount: 1.75,
+      primeP: 5.375,
+      pDiscount: 1.75,
+      fixedRate: 3.75,
+      cashRebateRate: 0.50,
+      financeMIP: true,
+      legalFees: 10000,
+      agentCommRate: 1.0,
+      // Ongoing costs
+      rateableRatio: 4.5,
+      saleableArea: 500,
+      mgtFeePerSqFt: 3.0,
+      // Affordability
+      income: 65000,
+      otherDebt: 0,
+      savings: 3000000,
+      stressBps: 200,
+      // Prepayment
+      prepaymentAmount: 300000,
+      prepaymentYear: 3,
+      prepaymentStrategy: 'reduce_payment',
+      // Mortgage-Link
+      mlDeposit: 800000,
+      mlMonthlyAdd: 5000
+    };
+
+    // Chart instances
+    let overviewChart = null;
+    let mlChart = null;
+
+    // Scale 2 Ad Valorem Stamp Duty progressive formula (Hong Kong IRD)
+    function calculateStampDuty(price, buyerStatus) {
+      if (buyerStatus === 'non_hkpr') {
+        // Non-HKPR post Feb 2024 is also Scale 2 now (BSD and NRSD abolished!)
+      }
+      if (price <= 3000000) {
+        return 100;
+      } else if (price <= 3528240) {
+        return 100 + (price - 3000000) * 0.10;
+      } else if (price <= 4500000) {
+        return price * 0.015;
+      } else if (price <= 5316000) {
+        return 67500 + (price - 4500000) * 0.10;
+      } else if (price <= 7200000) {
+        return price * 0.0225;
+      } else if (price <= 8294030) {
+        return 162000 + (price - 7200000) * 0.10;
+      } else if (price <= 10000000) {
+        return price * 0.03;
+      } else if (price <= 10757400) {
+        return 300000 + (price - 10000000) * 0.10;
+      } else if (price <= 20000000) {
+        return price * 0.0375;
+      } else if (price <= 21739120) {
+        return 750000 + (price - 20000000) * 0.10;
+      } else {
+        return price * 0.0425;
+      }
+    }
+
+    // HKMC Mortgage Insurance Premium (MIP) Rate Estimation
+    function calculateMIPPremium(price, ltv, tenure) {
+      if (ltv <= 70) return 0;
+      
+      // Standard floating rate premium table (30y) with 35% typical bank discount
+      let baseRatePercent = 0;
+      if (ltv <= 75) {
+        baseRatePercent = 1.15;
+      } else if (ltv <= 80) {
+        baseRatePercent = 1.75;
+      } else if (ltv <= 85) {
+        baseRatePercent = 2.50;
+      } else {
+        baseRatePercent = 3.05; // 90%
+      }
+
+      // Adjust for tenure: lower tenure has slightly lower premium
+      if (tenure <= 20) baseRatePercent *= 0.85;
+      else if (tenure <= 25) baseRatePercent *= 0.92;
+
+      const baseLoan = price * (ltv / 100);
+      const grossPremium = baseLoan * (baseRatePercent / 100);
+      const discountedPremium = grossPremium * 0.65; // 35% standard bank discount
+      return Math.round(discountedPremium);
+    }
+
+    // Calculate effective annual interest rate
+    function getEffectiveRate(planType = state.planType) {
+      if (planType === 'H') {
+        const uncapped = state.hibor + state.hSpread;
+        const cap = state.primeH - state.capDiscount;
+        return Math.min(uncapped, cap);
+      } else if (planType === 'P') {
+        return Math.max(0.1, state.primeP - state.pDiscount);
+      } else {
+        return state.fixedRate;
+      }
+    }
+
+    // Standard Monthly Amortization Formula: M = P * [r(1+r)^n] / [(1+r)^n - 1]
+    function calculateMonthlyPayment(principal, annualRatePct, years) {
+      if (annualRatePct <= 0 || years <= 0) return principal / (years * 12);
+      const r = (annualRatePct / 100) / 12;
+      const n = years * 12;
+      const payment = principal * (r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+      return Math.round(payment);
+    }
+
+    // Format currency string
+    function formatHKD(val) {
+      return 'HK$ ' + Math.round(val).toLocaleString('en-US');
+    }
+
+    // In-page Toast Feedback
+    function showToast(message) {
+      const toast = document.getElementById('toastNotification');
+      const msg = document.getElementById('toastMessage');
+      if (toast && msg) {
+        msg.textContent = message;
+        toast.classList.remove('translate-y-20', 'opacity-0');
+        setTimeout(() => {
+          toast.classList.add('translate-y-20', 'opacity-0');
+        }, 2600);
+      }
+    }
+
+    // Master Recalculation Engine
+    function calculateAll() {
+      // 1. Tenure validation based on age
+      const maxAgeLimit = 80;
+      const allowableTenure = Math.min(30, Math.max(5, maxAgeLimit - state.borrowerAge));
+      const tenureElHint = document.getElementById('maxTenureAllowedHint');
+      if (tenureElHint) {
+        tenureElHint.textContent = `Max allowable: ${allowableTenure} yrs (Age rule: ${maxAgeLimit} - ${state.borrowerAge} = ${maxAgeLimit - state.borrowerAge} yrs)`;
+      }
+
+      // 2. Base loan & Down Payment
+      const baseLoan = Math.round(state.price * (state.ltv / 100));
+      const downPayment = state.price - baseLoan;
+
+      // 3. MIP calculation if LTV > 70%
+      const isMIP = state.ltv > 70;
+      const mipAlert = document.getElementById('mipAlertBox');
+      const mipCostRow = document.getElementById('costMIPRow');
+      let mipPremium = 0;
+
+      if (isMIP && state.propertyUsage === 'self_use') {
+        mipPremium = calculateMIPPremium(state.price, state.ltv, state.tenureYears);
+        if (mipAlert) mipAlert.classList.remove('hidden');
+        if (mipCostRow) mipCostRow.classList.remove('hidden');
+        const badge = document.getElementById('mipPremiumBadge');
+        if (badge) badge.textContent = formatHKD(mipPremium);
+      } else {
+        if (mipAlert) mipAlert.classList.add('hidden');
+        if (mipCostRow) mipCostRow.classList.add('hidden');
+      }
+
+      // Actual financed loan amount
+      const financedLoan = (isMIP && state.financeMIP) ? (baseLoan + mipPremium) : baseLoan;
+
+      // 4. Interest Rates
+      const effectiveRate = getEffectiveRate();
+      const uncappedH = (state.hibor + state.hSpread).toFixed(3);
+      const capH = (state.primeH - state.capDiscount).toFixed(3);
+      
+      const uncappedHEl = document.getElementById('uncappedHRate');
+      if (uncappedHEl) uncappedHEl.textContent = uncappedH + '%';
+      const capHEl = document.getElementById('capHRate');
+      if (capHEl) capHEl.textContent = capH + '%';
+
+      const capBadge = document.getElementById('hCapStatusBadge');
+      if (capBadge) {
+        if (parseFloat(uncappedH) > parseFloat(capH)) {
+          capBadge.textContent = 'CAP TRIGGERED';
+          capBadge.className = 'bg-amber-100 text-amber-800 text-[10px] px-1.5 py-0.5 rounded font-bold';
+        } else {
+          capBadge.textContent = 'FLOATING H-RATE';
+          capBadge.className = 'bg-emerald-100 text-emerald-800 text-[10px] px-1.5 py-0.5 rounded font-bold';
+        }
+      }
+
+      const effRateDisplay = document.getElementById('effectiveRateDisplay');
+      if (effRateDisplay) effRateDisplay.textContent = effectiveRate.toFixed(3) + '%';
+      
+      const effFormula = document.getElementById('effectiveRateFormula');
+      if (effFormula) {
+        if (state.planType === 'H') {
+          effFormula.textContent = parseFloat(uncappedH) > parseFloat(capH) ? `P - ${state.capDiscount.toFixed(2)}% (Cap applied)` : `H (${state.hibor}%) + ${state.hSpread}%`;
+        } else if (state.planType === 'P') {
+          effFormula.textContent = `P (${state.primeP}%) - ${state.pDiscount}%`;
+        } else {
+          effFormula.textContent = `Promotional Fixed Rate (${state.fixedRate}%)`;
+        }
+      }
+
+      // 5. Monthly Repayments
+      const monthlyPayment = calculateMonthlyPayment(financedLoan, effectiveRate, state.tenureYears);
+      const totalRepayment = monthlyPayment * state.tenureYears * 12;
+      const totalInterest = Math.max(0, totalRepayment - financedLoan);
+
+      // Bi-weekly payment
+      const biweeklyPayment = Math.round(monthlyPayment / 2);
+
+      // Update Hero display
+      const monthRepayDisplay = document.getElementById('monthlyRepaymentDisplay');
+      if (monthRepayDisplay) {
+        monthRepayDisplay.textContent = state.repaymentFreq === 'biweekly' ? formatHKD(biweeklyPayment) : formatHKD(monthlyPayment);
+      }
+      const biweeklyNote = document.getElementById('biweeklyNote');
+      if (biweeklyNote) {
+        if (state.repaymentFreq === 'biweekly') {
+          biweeklyNote.innerHTML = `26 half-payments/yr (Equivalent to 13 months, knocks ~3.5 years off term)`;
+        } else {
+          biweeklyNote.innerHTML = `Or <strong>${formatHKD(biweeklyPayment)}</strong> every 2 weeks under Bi-weekly plan`;
+        }
+      }
+
+      // First month breakdown
+      const firstMonthInterest = Math.round(financedLoan * (effectiveRate / 100 / 12));
+      const firstMonthPrincipal = Math.max(0, monthlyPayment - firstMonthInterest);
+      const principalPct = Math.round((firstMonthPrincipal / monthlyPayment) * 100);
+      const interestPct = 100 - principalPct;
+
+      const m1P = document.getElementById('monthOnePrincipal');
+      if (m1P) m1P.textContent = `${formatHKD(firstMonthPrincipal)} (${principalPct}%)`;
+      const m1I = document.getElementById('monthOneInterest');
+      if (m1I) m1I.textContent = `${formatHKD(firstMonthInterest)} (${interestPct}%)`;
+      
+      const pBar = document.getElementById('firstMonthPrincipalBar');
+      if (pBar) pBar.style.width = principalPct + '%';
+      const iBar = document.getElementById('firstMonthInterestBar');
+      if (iBar) iBar.style.width = interestPct + '%';
+
+      // Minimum Income Required for this loan (DSR 50%)
+      const minIncomeReq = Math.round(monthlyPayment / 0.50);
+      const minIncEl = document.getElementById('minIncomeRequiredDisplay');
+      if (minIncEl) minIncEl.textContent = formatHKD(minIncomeReq);
+
+      const loanSumm = document.getElementById('loanAmountSummary');
+      if (loanSumm) loanSumm.textContent = formatHKD(financedLoan);
+      const dpSumm = document.getElementById('downPaymentSummary');
+      if (dpSumm) dpSumm.textContent = formatHKD(downPayment);
+
+      const totPrinc = document.getElementById('totalPrincipalDisplay');
+      if (totPrinc) totPrinc.textContent = formatHKD(financedLoan);
+      const totInt = document.getElementById('totalInterestDisplay');
+      if (totInt) totInt.textContent = formatHKD(totalInterest);
+      const totRep = document.getElementById('totalRepaymentDisplay');
+      if (totRep) totRep.textContent = formatHKD(totalRepayment);
+
+      // Cash rebate
+      const cashRebateAmount = Math.round(baseLoan * (state.cashRebateRate / 100));
+      const rebateEl = document.getElementById('cashRebateDisplay');
+      if (rebateEl) rebateEl.textContent = '+' + formatHKD(cashRebateAmount);
+
+      // 6. Upfront Cash Required (Hong Kong Acquisition Costs)
+      const stampDuty = calculateStampDuty(state.price, state.buyerStatus);
+      const agentFee = Math.round(state.price * (state.agentCommRate / 100));
+      const upfrontMIP = (isMIP && !state.financeMIP) ? mipPremium : 0;
+      const netUpfrontCash = downPayment + stampDuty + agentFee + state.legalFees + upfrontMIP - cashRebateAmount;
+
+      const upfrontDisplay = document.getElementById('totalUpfrontCashDisplay');
+      if (upfrontDisplay) upfrontDisplay.textContent = formatHKD(netUpfrontCash);
+
+      const cDP = document.getElementById('costDownPayment');
+      if (cDP) cDP.textContent = formatHKD(downPayment);
+      const cSD = document.getElementById('costStampDuty');
+      if (cSD) cSD.textContent = formatHKD(stampDuty);
+      const sEffRate = document.getElementById('stampDutyEffectiveRate');
+      if (sEffRate) sEffRate.textContent = `(${((stampDuty / state.price) * 100).toFixed(2)}%)`;
+      const cAgent = document.getElementById('costAgentCommission');
+      if (cAgent) cAgent.textContent = formatHKD(agentFee);
+      const cLegal = document.getElementById('costLegalFees');
+      if (cLegal) cLegal.textContent = formatHKD(state.legalFees);
+      
+      const cMIP = document.getElementById('costMIPDisplay');
+      if (cMIP) cMIP.textContent = formatHKD(upfrontMIP);
+      const cMIPNote = document.getElementById('costMIPFinancedNote');
+      if (cMIPNote) {
+        cMIPNote.textContent = state.financeMIP ? 'Financed into loan' : 'Paid upfront in cash';
+        cMIPNote.className = state.financeMIP ? 'text-[10px] bg-purple-100 text-purple-700 px-1 rounded' : 'text-[10px] bg-amber-100 text-amber-800 px-1 rounded font-bold';
+      }
+      const cRebateDed = document.getElementById('costCashRebateDeduction');
+      if (cRebateDed) cRebateDed.textContent = '- ' + formatHKD(cashRebateAmount);
+
+      // 7. Ongoing Holding Costs (Rates, Rent, Management)
+      const annualRentalValue = state.price * (state.rateableRatio / 100);
+      const monthlyRates = Math.round((annualRentalValue * 0.05) / 12);
+      const monthlyGovtRent = Math.round((annualRentalValue * 0.03) / 12);
+      const monthlyMgtFee = Math.round(state.saleableArea * state.mgtFeePerSqFt);
+      const totalMonthlyHolding = monthlyPayment + monthlyRates + monthlyGovtRent + monthlyMgtFee;
+
+      const totHoldDisplay = document.getElementById('totalMonthlyHousingOutlay');
+      if (totHoldDisplay) totHoldDisplay.textContent = formatHKD(totalMonthlyHolding);
+      const mRatesEl = document.getElementById('monthlyRatesDisplay');
+      if (mRatesEl) mRatesEl.textContent = formatHKD(monthlyRates) + '/mo';
+      const mRentEl = document.getElementById('monthlyGovtRentDisplay');
+      if (mRentEl) mRentEl.textContent = formatHKD(monthlyGovtRent) + '/mo';
+      const mMgtEl = document.getElementById('monthlyMgtFeeDisplay');
+      if (mMgtEl) mMgtEl.textContent = formatHKD(monthlyMgtFee) + '/mo';
+
+      // 8. Affordability & Stress Test Calculations
+      updateAffordabilityTab(monthlyPayment, financedLoan, effectiveRate);
+
+      // 9. Amortization Schedule & Prepayment
+      updateAmortizationTab(financedLoan, effectiveRate, state.tenureYears, monthlyPayment);
+
+      // 10. Mortgage-Link Simulator
+      updateMortgageLinkTab(financedLoan, effectiveRate, totalInterest);
+
+      // 11. Plan Comparison Tab
+      updatePlanComparisonTab(financedLoan, state.tenureYears);
+
+      // 12. Render / Update Charts
+      renderAmortizationChart(financedLoan, effectiveRate, state.tenureYears, monthlyPayment);
+    }
+
+    // Affordability & Stress Test Calculations
+    function updateAffordabilityTab(monthlyPayment, loanAmount, effectiveRate) {
+      const totalMonthlyDebt = monthlyPayment + state.otherDebt;
+      const currentDsr = (totalMonthlyDebt / state.income) * 100;
+      
+      const currentDsrEl = document.getElementById('currentDsrDisplay');
+      if (currentDsrEl) currentDsrEl.textContent = currentDsr.toFixed(1) + '%';
+      
+      const totDebtEl = document.getElementById('totalDebtMonthlyDisplay');
+      if (totDebtEl) totDebtEl.textContent = formatHKD(totalMonthlyDebt);
+
+      const dsrBarLabel = document.getElementById('dsrBarLabel');
+      if (dsrBarLabel) dsrBarLabel.textContent = `${currentDsr.toFixed(1)}% of HK$ ${state.income.toLocaleString()}`;
+
+      const dsrProgressBar = document.getElementById('dsrProgressBar');
+      if (dsrProgressBar) {
+        dsrProgressBar.style.width = Math.min(100, currentDsr) + '%';
+        if (currentDsr <= 50) {
+          dsrProgressBar.className = 'bg-emerald-500 transition-all duration-500';
+        } else {
+          dsrProgressBar.className = 'bg-red-500 transition-all duration-500';
+        }
+      }
+
+      const baselineBadge = document.getElementById('baselineDsrBadge');
+      if (baselineBadge) {
+        if (currentDsr <= 50) {
+          baselineBadge.className = 'px-4 py-2 rounded-xl text-center font-bold text-xs bg-emerald-100 text-emerald-800 border border-emerald-300 shadow-sm';
+          baselineBadge.innerHTML = '✅ PASSES HKMA LIMIT<br><span class="text-[10px] font-normal">Within 50% limit</span>';
+        } else {
+          baselineBadge.className = 'px-4 py-2 rounded-xl text-center font-bold text-xs bg-red-100 text-red-800 border border-red-300 shadow-sm';
+          baselineBadge.innerHTML = '❌ EXCEEDS HKMA LIMIT<br><span class="text-[10px] font-normal">Above 50% max DSR</span>';
+        }
+      }
+
+      // Stress test: Rate + StressBps
+      const stressedRate = effectiveRate + (state.stressBps / 100);
+      const stressedMonthlyPayment = calculateMonthlyPayment(loanAmount, stressedRate, state.tenureYears);
+      const totalStressedDebt = stressedMonthlyPayment + state.otherDebt;
+      const stressedDsr = (totalStressedDebt / state.income) * 100;
+
+      const stressedDsrEl = document.getElementById('stressedDsrDisplay');
+      if (stressedDsrEl) stressedDsrEl.textContent = stressedDsr.toFixed(1) + '%';
+      
+      const stressedRateEl = document.getElementById('stressedRateDisplay');
+      if (stressedRateEl) stressedRateEl.textContent = stressedRate.toFixed(3) + '%';
+
+      const stressedPaymentEl = document.getElementById('stressedMonthlyPaymentDisplay');
+      if (stressedPaymentEl) stressedPaymentEl.textContent = formatHKD(stressedMonthlyPayment);
+
+      const stressedBadge = document.getElementById('stressedDsrBadge');
+      if (stressedBadge) {
+        if (stressedDsr <= 60) {
+          stressedBadge.className = 'px-4 py-2 rounded-xl text-center font-bold text-xs bg-emerald-100 text-emerald-800 border border-emerald-300 shadow-sm';
+          stressedBadge.innerHTML = '✅ PASSES STRESS TEST<br><span class="text-[10px] font-normal">Under 60% threshold</span>';
+        } else {
+          stressedBadge.className = 'px-4 py-2 rounded-xl text-center font-bold text-xs bg-amber-100 text-amber-800 border border-amber-300 shadow-sm';
+          stressedBadge.innerHTML = '⚠️ STRESS WARNING<br><span class="text-[10px] font-normal">Exceeds 60% stress cap</span>';
+        }
+      }
+
+      // Reverse purchasing power calculation
+      const maxMonthlyPaymentAllowed = Math.max(0, (state.income * 0.50) - state.otherDebt);
+      const r = (effectiveRate / 100) / 12;
+      const n = state.tenureYears * 12;
+      const maxLoan = Math.round(maxMonthlyPaymentAllowed * (Math.pow(1 + r, n) - 1) / (r * Math.pow(1 + r, n)));
+      
+      // Under 70% bank cap, price = loan / 0.70; plus stamp duty and legal cash requirements from savings
+      const maxAffordablePrice = Math.round(Math.min(maxLoan / 0.70, (maxLoan + state.savings) * 0.96));
+
+      const maxPriceEl = document.getElementById('maxAffordablePropPrice');
+      if (maxPriceEl) maxPriceEl.textContent = formatHKD(maxAffordablePrice);
+      const maxLoanEl = document.getElementById('maxAffordableLoanAmount');
+      if (maxLoanEl) maxLoanEl.textContent = formatHKD(maxLoan);
+      const maxBudgetEl = document.getElementById('maxMonthlyBudget');
+      if (maxBudgetEl) maxBudgetEl.textContent = formatHKD(maxMonthlyPaymentAllowed);
+    }
+
+    // Full Amortization Calculation & Prepayment Simulator
+    function updateAmortizationTab(loanAmount, ratePct, years, regularMonthlyPayment) {
+      const tableBody = document.getElementById('amortizationTableBody');
+      if (!tableBody) return;
+
+      const monthlyRate = (ratePct / 100) / 12;
+      let balance = loanAmount;
+      let cumulativeInterest = 0;
+      let rowsHtml = '';
+
+      for (let y = 1; y <= years; y++) {
+        let yearPrincipal = 0;
+        let yearInterest = 0;
+
+        for (let m = 1; m <= 12; m++) {
+          if (balance <= 0) break;
+          const interestForMonth = balance * monthlyRate;
+          const principalForMonth = Math.min(balance, regularMonthlyPayment - interestForMonth);
+          yearInterest += interestForMonth;
+          yearPrincipal += principalForMonth;
+          balance -= principalForMonth;
+        }
+
+        cumulativeInterest += yearInterest;
+        const yearRepayment = yearPrincipal + yearInterest;
+
+        rowsHtml += `
+          <tr class="hover:bg-slate-50 transition">
+            <td class="py-2 px-3 font-semibold text-slate-800">Year ${y}</td>
+            <td class="py-2 px-3 text-right">${formatHKD(yearRepayment)}</td>
+            <td class="py-2 px-3 text-right text-emerald-700">${formatHKD(yearPrincipal)}</td>
+            <td class="py-2 px-3 text-right text-amber-700">${formatHKD(yearInterest)}</td>
+            <td class="py-2 px-3 text-right text-slate-600">${formatHKD(cumulativeInterest)}</td>
+            <td class="py-2 px-3 text-right font-bold text-slate-900">${formatHKD(Math.max(0, balance))}</td>
+          </tr>
+        `;
+        if (balance <= 0) break;
+      }
+      tableBody.innerHTML = rowsHtml;
+
+      // Prepayment Simulator
+      const prepayAmt = state.prepaymentAmount;
+      const prepayYr = parseInt(state.prepaymentYear);
+      
+      // Calculate remaining balance at start of prepayYr
+      let simBalance = loanAmount;
+      for (let m = 1; m <= (prepayYr - 1) * 12; m++) {
+        const intP = simBalance * monthlyRate;
+        const princP = Math.min(simBalance, regularMonthlyPayment - intP);
+        simBalance -= princP;
+      }
+
+      // Prepayment reduces balance
+      const balanceAfterPrepay = Math.max(0, simBalance - prepayAmt);
+      const remainingMonths = (years - prepayYr + 1) * 12;
+
+      let newPayment = regularMonthlyPayment;
+      let interestSaved = 0;
+
+      if (state.prepaymentStrategy === 'reduce_payment') {
+        newPayment = calculateMonthlyPayment(balanceAfterPrepay, ratePct, (years - prepayYr + 1));
+        const oldFutureInterest = (regularMonthlyPayment * remainingMonths) - simBalance;
+        const newFutureInterest = (newPayment * remainingMonths) - balanceAfterPrepay;
+        interestSaved = Math.max(0, oldFutureInterest - newFutureInterest);
+      } else {
+        // Shorten term: keep same monthly payment, calculate new number of months
+        let tempBal = balanceAfterPrepay;
+        let monthsNeeded = 0;
+        let newFutureInterest = 0;
+        while (tempBal > 0 && monthsNeeded < remainingMonths) {
+          monthsNeeded++;
+          const curInt = tempBal * monthlyRate;
+          const curPrinc = Math.min(tempBal, regularMonthlyPayment - curInt);
+          newFutureInterest += curInt;
+          tempBal -= curPrinc;
+        }
+        const oldFutureInterest = (regularMonthlyPayment * remainingMonths) - simBalance;
+        interestSaved = Math.max(0, oldFutureInterest - newFutureInterest);
+        newPayment = regularMonthlyPayment;
+      }
+
+      // Penalty check (typical HK banks: Yr 1: 1.5% - 2% penalty; Yr 2: 1% penalty; Yr 3+: 0%)
+      let penaltyAmt = 0;
+      let penaltyText = 'HK$ 0 (No Penalty)';
+      let penaltyNote = 'Outside bank lock-in period';
+
+      if (prepayYr === 1) {
+        penaltyAmt = Math.round(prepayAmt * 0.02);
+        penaltyText = `${formatHKD(penaltyAmt)} (Year 1: 2%)`;
+        penaltyNote = 'Plus bank cash rebate clawback';
+      } else if (prepayYr === 2) {
+        penaltyAmt = Math.round(prepayAmt * 0.01);
+        penaltyText = `${formatHKD(penaltyAmt)} (Year 2: 1%)`;
+        penaltyNote = 'Partial bank lock-in penalty';
+      }
+
+      const prepayIntSaveEl = document.getElementById('prepayInterestSaved');
+      if (prepayIntSaveEl) prepayIntSaveEl.textContent = formatHKD(interestSaved);
+      
+      const prepayNewPayEl = document.getElementById('prepayNewPaymentDisplay');
+      if (prepayNewPayEl) {
+        if (state.prepaymentStrategy === 'reduce_payment') {
+          prepayNewPayEl.textContent = `${formatHKD(newPayment)}/mo`;
+        } else {
+          prepayNewPayEl.textContent = `Shortens term significantly`;
+        }
+      }
+
+      const prepayDeltaEl = document.getElementById('prepayPaymentDelta');
+      if (prepayDeltaEl) {
+        if (state.prepaymentStrategy === 'reduce_payment') {
+          prepayDeltaEl.textContent = `Reduces payment by ${formatHKD(regularMonthlyPayment - newPayment)}/mo`;
+        } else {
+          prepayDeltaEl.textContent = `Maintains ${formatHKD(regularMonthlyPayment)}/mo payments`;
+        }
+      }
+
+      const prepayPenEl = document.getElementById('prepayPenaltyDisplay');
+      if (prepayPenEl) prepayPenEl.textContent = penaltyText;
+      const prepayPenNoteEl = document.getElementById('prepayPenaltyNote');
+      if (prepayPenNoteEl) prepayPenNoteEl.textContent = penaltyNote;
+    }
+
+    // Mortgage-Link Simulator
+    function updateMortgageLinkTab(loanAmount, ratePct, totalGrossInterest) {
+      const mlCap = Math.round(loanAmount * 0.50);
+      const effectiveDeposit = Math.min(state.mlDeposit, mlCap);
+      const annualEarned = effectiveDeposit * (ratePct / 100);
+      
+      // Over 30 years approximation with amortizing loan balance cap
+      const totalEarnedApprox = Math.round(annualEarned * state.tenureYears * 0.75); // balances amortize down
+      const netInterestPaid = Math.max(0, totalGrossInterest - totalEarnedApprox);
+      const effectiveNetRate = Math.max(0, ratePct * (1 - (effectiveDeposit / loanAmount)));
+
+      const mlCapEl = document.getElementById('mlCapDisplay');
+      if (mlCapEl) mlCapEl.textContent = `${formatHKD(mlCap)} (50% of Loan)`;
+      const mlRateEl = document.getElementById('mlInterestRateDisplay');
+      if (mlRateEl) mlRateEl.textContent = `${ratePct.toFixed(3)}% p.a.`;
+
+      const mlEarnedEl = document.getElementById('mlTotalInterestEarned');
+      if (mlEarnedEl) mlEarnedEl.textContent = formatHKD(totalEarnedApprox);
+      const mlNetEl = document.getElementById('mlNetInterestPaid');
+      if (mlNetEl) mlNetEl.textContent = formatHKD(netInterestPaid);
+      const mlNetRateEl = document.getElementById('mlEffectiveRateNet');
+      if (mlNetRateEl) mlNetRateEl.textContent = effectiveNetRate.toFixed(2) + '%';
+
+      renderMortgageLinkChart(totalGrossInterest, totalEarnedApprox, netInterestPaid);
+    }
+
+    // Plan Comparison Matrix
+    function updatePlanComparisonTab(loanAmount, tenureYears) {
+      const rateH = getEffectiveRate('H');
+      const rateP = getEffectiveRate('P');
+      const rateF = state.fixedRate;
+
+      const payH = calculateMonthlyPayment(loanAmount, rateH, tenureYears);
+      const payP = calculateMonthlyPayment(loanAmount, rateP, tenureYears);
+      const payF = calculateMonthlyPayment(loanAmount, rateF, tenureYears);
+
+      const totIntH = (payH * tenureYears * 12) - loanAmount;
+      const totIntP = (payP * tenureYears * 12) - loanAmount;
+      const totIntF = (payF * tenureYears * 12) - loanAmount;
+
+      document.getElementById('compRateH').textContent = rateH.toFixed(3) + '%';
+      document.getElementById('compRateP').textContent = rateP.toFixed(3) + '%';
+      document.getElementById('compRateF').textContent = rateF.toFixed(3) + '%';
+
+      document.getElementById('compPaymentH').textContent = formatHKD(payH);
+      document.getElementById('compPaymentP').textContent = formatHKD(payP);
+      document.getElementById('compPaymentF').textContent = formatHKD(payF);
+
+      document.getElementById('compInterestH').textContent = formatHKD(totIntH);
+      document.getElementById('compInterestP').textContent = formatHKD(totIntP);
+      document.getElementById('compInterestF').textContent = formatHKD(totIntF);
+    }
+
+    // Render Overview Amortization Chart (Chart.js)
+    function renderAmortizationChart(loanAmount, ratePct, years, monthlyPayment) {
+      const ctx = document.getElementById('overviewAmortizationChart');
+      if (!ctx) return;
+
+      const labels = [];
+      const balanceData = [];
+      const cumulativeInterestData = [];
+
+      const monthlyRate = (ratePct / 100) / 12;
+      let balance = loanAmount;
+      let cumInt = 0;
+
+      for (let y = 0; y <= years; y += 2) {
+        if (y === 0) {
+          labels.push('Yr 0');
+          balanceData.push(loanAmount);
+          cumulativeInterestData.push(0);
+          continue;
+        }
+
+        // simulate 2 years (24 months)
+        for (let m = 1; m <= 24; m++) {
+          if (balance <= 0) break;
+          const intM = balance * monthlyRate;
+          const princM = Math.min(balance, monthlyPayment - intM);
+          cumInt += intM;
+          balance -= princM;
+        }
+
+        labels.push('Yr ' + y);
+        balanceData.push(Math.round(Math.max(0, balance)));
+        cumulativeInterestData.push(Math.round(cumInt));
+      }
+
+      if (overviewChart) {
+        overviewChart.destroy();
+      }
+
+      overviewChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: 'Outstanding Principal (HK$)',
+              data: balanceData,
+              borderColor: '#10b981',
+              backgroundColor: 'rgba(16, 185, 129, 0.1)',
+              fill: true,
+              tension: 0.25,
+              borderWidth: 2.5
+            },
+            {
+              label: 'Cumulative Interest Paid (HK$)',
+              data: cumulativeInterestData,
+              borderColor: '#f59e0b',
+              backgroundColor: 'rgba(245, 158, 11, 0.1)',
+              fill: true,
+              tension: 0.25,
+              borderWidth: 2.5
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'top',
+              labels: {
+                boxWidth: 12,
+                font: { size: 11 }
+              }
+            },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  return context.dataset.label + ': HK$ ' + context.parsed.y.toLocaleString();
+                }
+              }
+            }
+          },
+          scales: {
+            y: {
+              ticks: {
+                callback: function(value) {
+                  return 'HK$' + (value / 1000000).toFixed(1) + 'M';
+                },
+                font: { size: 10 }
+              },
+              grid: { color: '#f1f5f9' }
+            },
+            x: {
+              ticks: { font: { size: 10 } },
+              grid: { display: false }
+            }
+          }
+        }
+      });
+    }
+
+    // Render Mortgage-Link Offset Bar Chart
+    function renderMortgageLinkChart(grossInterest, interestEarned, netInterest) {
+      const ctx = document.getElementById('mortgageLinkChart');
+      if (!ctx) return;
+
+      if (mlChart) {
+        mlChart.destroy();
+      }
+
+      mlChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['Without Mortgage-Link', 'With Mortgage-Link Deposit'],
+          datasets: [
+            {
+              label: 'Net Interest Paid',
+              data: [grossInterest, netInterest],
+              backgroundColor: ['#f59e0b', '#3b82f6'],
+              borderRadius: 6
+            },
+            {
+              label: 'Interest Saved / Earned',
+              data: [0, interestEarned],
+              backgroundColor: ['rgba(0,0,0,0)', '#10b981'],
+              borderRadius: 6
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'top',
+              labels: { boxWidth: 12, font: { size: 11 } }
+            },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  return context.dataset.label + ': HK$ ' + context.parsed.y.toLocaleString();
+                }
+              }
+            }
+          },
+          scales: {
+            y: {
+              stacked: true,
+              ticks: {
+                callback: function(value) {
+                  return 'HK$' + (value / 1000000).toFixed(1) + 'M';
+                },
+                font: { size: 10 }
+              },
+              grid: { color: '#f1f5f9' }
+            },
+            x: {
+              stacked: true,
+              grid: { display: false }
+            }
+          }
+        }
+      });
+    }
+
+    // Wire Up Event Listeners
+    function setupEventListeners() {
+      // Tab Navigation
+      const tabBtns = document.querySelectorAll('.tab-btn');
+      tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const targetTab = btn.getAttribute('data-tab');
+          tabBtns.forEach(b => {
+            b.classList.remove('bg-emerald-50', 'text-emerald-700', 'font-semibold');
+            b.classList.add('text-slate-600', 'hover:bg-slate-100');
+          });
+          btn.classList.add('bg-emerald-50', 'text-emerald-700', 'font-semibold');
+          btn.classList.remove('text-slate-600', 'hover:bg-slate-100');
+
+          document.querySelectorAll('.tab-pane').forEach(pane => {
+            pane.classList.add('hidden');
+          });
+          const activePane = document.getElementById(targetTab);
+          if (activePane) {
+            activePane.classList.remove('hidden');
+          }
+          // Resize charts on tab display
+          if (overviewChart) overviewChart.resize();
+          if (mlChart) mlChart.resize();
+        });
+      });
+
+      // Property Price input & presets
+      const propPriceInput = document.getElementById('propPrice');
+      const propPriceDisplay = document.getElementById('propPriceDisplay');
+      if (propPriceInput) {
+        propPriceInput.addEventListener('input', (e) => {
+          state.price = Math.max(100000, parseFloat(e.target.value) || 0);
+          if (propPriceDisplay) propPriceDisplay.textContent = formatHKD(state.price);
+          calculateAll();
+        });
+      }
+
+      document.querySelectorAll('.preset-price-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const val = parseFloat(btn.getAttribute('data-value'));
+          state.price = val;
+          if (propPriceInput) propPriceInput.value = val;
+          if (propPriceDisplay) propPriceDisplay.textContent = formatHKD(val);
+          document.querySelectorAll('.preset-price-btn').forEach(b => {
+            b.className = 'preset-price-btn px-2 py-0.5 text-xs bg-slate-100 hover:bg-emerald-100 hover:text-emerald-800 rounded transition font-medium';
+          });
+          btn.className = 'preset-price-btn px-2 py-0.5 text-xs bg-emerald-50 text-emerald-700 border border-emerald-200 rounded transition font-semibold';
+          calculateAll();
+          showToast(`Property Price set to ${formatHKD(val)}`);
+        });
+      });
+
+      // LTV slider & presets
+      const ltvSlider = document.getElementById('ltvSlider');
+      const ltvDisplay = document.getElementById('ltvDisplay');
+      if (ltvSlider) {
+        ltvSlider.addEventListener('input', (e) => {
+          state.ltv = parseInt(e.target.value);
+          if (ltvDisplay) ltvDisplay.textContent = state.ltv + '%';
+          calculateAll();
+        });
+      }
+
+      document.querySelectorAll('.ltv-preset-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const ltvVal = parseInt(btn.getAttribute('data-ltv'));
+          state.ltv = ltvVal;
+          if (ltvSlider) ltvSlider.value = ltvVal;
+          if (ltvDisplay) ltvDisplay.textContent = ltvVal + '%';
+          calculateAll();
+          showToast(`LTV set to ${ltvVal}%`);
+        });
+      });
+
+      // Property type, buyer status, usage
+      document.getElementById('propertyType')?.addEventListener('change', (e) => {
+        state.propertyType = e.target.value;
+        calculateAll();
+      });
+      document.getElementById('buyerStatus')?.addEventListener('change', (e) => {
+        state.buyerStatus = e.target.value;
+        calculateAll();
+      });
+      document.getElementById('propertyUsage')?.addEventListener('change', (e) => {
+        state.propertyUsage = e.target.value;
+        if (state.propertyUsage === 'investment' && state.ltv > 70) {
+          state.ltv = 70;
+          if (ltvSlider) ltvSlider.value = 70;
+          if (ltvDisplay) ltvDisplay.textContent = '70%';
+          showToast('Rental properties capped at 70% LTV (MIP not eligible)');
+        }
+        calculateAll();
+      });
+
+      // Borrower Age & Tenure Slider
+      const tenureSlider = document.getElementById('tenureSlider');
+      const tenureDisplay = document.getElementById('tenureDisplay');
+      if (tenureSlider) {
+        tenureSlider.addEventListener('input', (e) => {
+          state.tenureYears = parseInt(e.target.value);
+          if (tenureDisplay) tenureDisplay.textContent = `${state.tenureYears} Years (${state.tenureYears * 12} mos)`;
+          calculateAll();
+        });
+      }
+      document.getElementById('borrowerAge')?.addEventListener('input', (e) => {
+        state.borrowerAge = Math.min(80, Math.max(18, parseInt(e.target.value) || 30));
+        calculateAll();
+      });
+
+      // Repayment frequency
+      document.querySelectorAll('input[name="repayFrequency"]').forEach(radio => {
+        radio.addEventListener('change', (e) => {
+          state.repaymentFreq = e.target.value;
+          calculateAll();
+          showToast(`Repayment frequency switched to ${state.repaymentFreq}`);
+        });
+      });
+
+      // Plan types: H vs P vs Fixed
+      const hInputs = document.getElementById('hPlanInputs');
+      const pInputs = document.getElementById('pPlanInputs');
+      const fInputs = document.getElementById('fixedPlanInputs');
+
+      document.querySelectorAll('.plan-type-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          state.planType = btn.getAttribute('data-plan');
+          document.querySelectorAll('.plan-type-btn').forEach(b => {
+            b.className = 'plan-type-btn px-2.5 py-1 rounded-md font-medium bg-slate-100 text-slate-700 hover:bg-slate-200';
+          });
+          btn.className = 'plan-type-btn px-2.5 py-1 rounded-md font-semibold bg-emerald-600 text-white';
+
+          if (state.planType === 'H') {
+            hInputs?.classList.remove('hidden');
+            pInputs?.classList.add('hidden');
+            fInputs?.classList.add('hidden');
+          } else if (state.planType === 'P') {
+            hInputs?.classList.add('hidden');
+            pInputs?.classList.remove('hidden');
+            fInputs?.classList.add('hidden');
+          } else {
+            hInputs?.classList.add('hidden');
+            pInputs?.classList.add('hidden');
+            fInputs?.classList.remove('hidden');
+          }
+          calculateAll();
+          showToast(`Plan changed to ${state.planType}-Plan`);
+        });
+      });
+
+      // Bank Presets
+      document.querySelectorAll('.bank-preset-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const bank = btn.getAttribute('data-bank');
+          if (bank === 'HSBC' || bank === 'BOC' || bank === 'HASE') {
+            state.planType = 'H';
+            state.hibor = 3.90;
+            state.hSpread = 1.30;
+            state.primeH = 5.375;
+            state.capDiscount = 1.75;
+          } else if (bank === 'SCB') {
+            state.planType = 'H';
+            state.hibor = 3.90;
+            state.hSpread = 1.30;
+            state.primeH = 5.625;
+            state.capDiscount = 2.00;
+          }
+          // sync input values
+          document.getElementById('hiborRate').value = state.hibor;
+          document.getElementById('hSpread').value = state.hSpread;
+          document.getElementById('primeRateForH').value = state.primeH;
+          document.getElementById('primeCapSpread').value = state.capDiscount;
+          calculateAll();
+          showToast(`Applied ${bank} market rates`);
+        });
+      });
+
+      // Interest rate field listeners
+      document.getElementById('hiborRate')?.addEventListener('input', (e) => {
+        state.hibor = parseFloat(e.target.value) || 0;
+        calculateAll();
+      });
+      document.getElementById('hSpread')?.addEventListener('input', (e) => {
+        state.hSpread = parseFloat(e.target.value) || 0;
+        calculateAll();
+      });
+      document.getElementById('primeRateForH')?.addEventListener('input', (e) => {
+        state.primeH = parseFloat(e.target.value) || 0;
+        calculateAll();
+      });
+      document.getElementById('primeCapSpread')?.addEventListener('input', (e) => {
+        state.capDiscount = parseFloat(e.target.value) || 0;
+        calculateAll();
+      });
+      document.getElementById('primeRatePPlan')?.addEventListener('change', (e) => {
+        state.primeP = parseFloat(e.target.value) || 5.375;
+        calculateAll();
+      });
+      document.getElementById('pDiscount')?.addEventListener('input', (e) => {
+        state.pDiscount = parseFloat(e.target.value) || 0;
+        calculateAll();
+      });
+      document.getElementById('fixedAnnualRate')?.addEventListener('input', (e) => {
+        state.fixedRate = parseFloat(e.target.value) || 3.75;
+        calculateAll();
+      });
+      document.getElementById('cashRebateRate')?.addEventListener('input', (e) => {
+        state.cashRebateRate = parseFloat(e.target.value) || 0;
+        calculateAll();
+      });
+      document.getElementById('financeMIP')?.addEventListener('change', (e) => {
+        state.financeMIP = e.target.checked;
+        calculateAll();
+        showToast(state.financeMIP ? 'Mortgage Insurance financed into loan' : 'Mortgage Insurance paid upfront');
+      });
+
+      // Ongoing Cost field listeners
+      document.getElementById('estRateableRatio')?.addEventListener('input', (e) => {
+        state.rateableRatio = parseFloat(e.target.value) || 4.5;
+        calculateAll();
+      });
+      document.getElementById('propertySaleArea')?.addEventListener('input', (e) => {
+        state.saleableArea = parseFloat(e.target.value) || 500;
+        calculateAll();
+      });
+      document.getElementById('mgtFeePerSqFt')?.addEventListener('input', (e) => {
+        state.mgtFeePerSqFt = parseFloat(e.target.value) || 3.0;
+        calculateAll();
+      });
+
+      // Affordability field listeners
+      document.getElementById('monthlyIncome')?.addEventListener('input', (e) => {
+        state.income = parseFloat(e.target.value) || 0;
+        calculateAll();
+      });
+      document.getElementById('existingMonthlyDebt')?.addEventListener('input', (e) => {
+        state.otherDebt = parseFloat(e.target.value) || 0;
+        calculateAll();
+      });
+      document.getElementById('availableSavings')?.addEventListener('input', (e) => {
+        state.savings = parseFloat(e.target.value) || 0;
+        calculateAll();
+      });
+      document.getElementById('stressTestBps')?.addEventListener('change', (e) => {
+        state.stressBps = parseInt(e.target.value) || 200;
+        calculateAll();
+      });
+
+      document.querySelectorAll('.income-preset-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const val = parseFloat(btn.getAttribute('data-val'));
+          state.income = val;
+          document.getElementById('monthlyIncome').value = val;
+          calculateAll();
+          showToast(`Household income set to ${formatHKD(val)}`);
+        });
+      });
+
+      // Prepayment simulator listeners
+      document.getElementById('prepaymentAmount')?.addEventListener('input', (e) => {
+        state.prepaymentAmount = parseFloat(e.target.value) || 0;
+        calculateAll();
+      });
+      document.getElementById('prepaymentYear')?.addEventListener('change', (e) => {
+        state.prepaymentYear = parseInt(e.target.value) || 3;
+        calculateAll();
+      });
+      document.getElementById('prepaymentStrategy')?.addEventListener('change', (e) => {
+        state.prepaymentStrategy = e.target.value;
+        calculateAll();
+      });
+
+      // Mortgage-Link listeners
+      const mlDepInput = document.getElementById('mlDepositAmount');
+      const mlDepDisp = document.getElementById('mlDepositDisplay');
+      if (mlDepInput) {
+        mlDepInput.addEventListener('input', (e) => {
+          state.mlDeposit = parseFloat(e.target.value) || 0;
+          if (mlDepDisp) mlDepDisp.textContent = formatHKD(state.mlDeposit);
+          calculateAll();
+        });
+      }
+      document.getElementById('mlMonthlyAddition')?.addEventListener('input', (e) => {
+        state.mlMonthlyAdd = parseFloat(e.target.value) || 0;
+        calculateAll();
+      });
+      document.querySelectorAll('.ml-preset-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const val = parseFloat(btn.getAttribute('data-val'));
+          state.mlDeposit = val;
+          if (mlDepInput) mlDepInput.value = val;
+          if (mlDepDisp) mlDepDisp.textContent = formatHKD(val);
+          calculateAll();
+        });
+      });
+
+      // Reset Defaults
+      document.getElementById('resetDefaultsBtn')?.addEventListener('click', () => {
+        state.price = 8000000;
+        state.ltv = 70;
+        state.propertyType = 'private';
+        state.buyerStatus = 'first_time';
+        state.propertyUsage = 'self_use';
+        state.borrowerAge = 32;
+        state.tenureYears = 30;
+        state.repaymentFreq = 'monthly';
+        state.planType = 'H';
+        state.hibor = 3.90;
+        state.hSpread = 1.30;
+        state.primeH = 5.375;
+        state.capDiscount = 1.75;
+        state.income = 65000;
+        state.otherDebt = 0;
+        state.savings = 3000000;
+
+        // update UI inputs
+        document.getElementById('propPrice').value = 8000000;
+        document.getElementById('propPriceDisplay').textContent = 'HK$ 8,000,000';
+        document.getElementById('ltvSlider').value = 70;
+        document.getElementById('ltvDisplay').textContent = '70%';
+        document.getElementById('tenureSlider').value = 30;
+        document.getElementById('tenureDisplay').textContent = '30 Years (360 mos)';
+        document.getElementById('borrowerAge').value = 32;
+        document.getElementById('monthlyIncome').value = 65000;
+        calculateAll();
+        showToast('Reset all parameters to default');
+      });
+
+      // Print / PDF Button
+      document.getElementById('printReportBtn')?.addEventListener('click', () => {
+        window.print();
+      });
+
+      // Export CSV Button
+      document.getElementById('exportCsvBtn')?.addEventListener('click', () => {
+        exportAmortizationCsv();
+      });
+    }
+
+    // Export Amortization Table to CSV
+    function exportAmortizationCsv() {
+      const monthlyRate = (getEffectiveRate() / 100) / 12;
+      const loanAmount = Math.round(state.price * (state.ltv / 100));
+      const monthlyPayment = calculateMonthlyPayment(loanAmount, getEffectiveRate(), state.tenureYears);
+      
+      let csv = 'Year,Annual Repayment,Principal Paid,Interest Paid,Cumulative Interest,Remaining Balance\n';
+      let balance = loanAmount;
+      let cumInt = 0;
+
+      for (let y = 1; y <= state.tenureYears; y++) {
+        let yrPrinc = 0;
+        let yrInt = 0;
+        for (let m = 1; m <= 12; m++) {
+          if (balance <= 0) break;
+          const intM = balance * monthlyRate;
+          const princM = Math.min(balance, monthlyPayment - intM);
+          yrInt += intM;
+          yrPrinc += princM;
+          balance -= princM;
+        }
+        cumInt += yrInt;
+        csv += `${y},${Math.round(yrPrinc + yrInt)},${Math.round(yrPrinc)},${Math.round(yrInt)},${Math.round(cumInt)},${Math.round(Math.max(0, balance))}\n`;
+        if (balance <= 0) break;
+      }
+
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.setAttribute('href', url);
+      link.setAttribute('download', `HK_Mortgage_Amortization_${state.price / 10000}W.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      showToast('Amortization schedule exported to CSV');
+    }
+
+    // Initialize on page load
+    window.addEventListener('DOMContentLoaded', () => {
+      setupEventListeners();
+      calculateAll();
+    });
+  </script>
+</body>
+</html>
